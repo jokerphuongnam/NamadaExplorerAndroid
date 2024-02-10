@@ -16,9 +16,12 @@ import com.monsjoker.namadaexplorer.uis.screens.home.data.HomeDetailsData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val supabaseAaNetwork: AauxuambgprwlwvfpkszNetwork): ViewModel() {
+class HomeViewModel @Inject constructor(
+    @Singleton private val supabaseAaNetwork: AauxuambgprwlwvfpkszNetwork
+) : ViewModel() {
     var validatorsState by mutableStateOf<DataState<List<Validator>>>(DataState.Loading())
         private set
 

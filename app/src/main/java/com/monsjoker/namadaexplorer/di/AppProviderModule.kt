@@ -4,7 +4,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.monsjoker.namadaexplorer.BuildConfig
-import com.monsjoker.namadaexplorer.data.network.NamadaInfo
+import com.monsjoker.namadaexplorer.data.network.namada_info.NamadaInfoNetwork
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.AauxuambgprwlwvfpkszInterceptor
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.AauxuambgprwlwvfpkszNetwork
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.TgwsikrpibxhbmtgrhboInterceptor
@@ -76,11 +76,13 @@ object AppProviderModule {
         .build()
         .create()
 
-    fun providesNamadaInfo(
+    @Singleton
+    @Provides
+    fun providesNamadaInfoNetwork(
         okHttpBuilder: OkHttpClient.Builder,
         factory: Gson
-    ): NamadaInfo = Retrofit.Builder()
-        .baseUrl(BuildConfig.TGWSIKRPIBXHBMTEGRHBO_SUPABASE_URL)
+    ): NamadaInfoNetwork = Retrofit.Builder()
+        .baseUrl(BuildConfig.NAMADA_INFO_URL)
         .addConverterFactory(GsonConverterFactory.create(factory))
         .client(okHttpBuilder.build())
         .build()

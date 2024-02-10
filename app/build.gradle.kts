@@ -35,7 +35,7 @@ android {
                 "TGWSIKRPIBXHBMTEGRHBO_SUPABASE_URL",
                 "\"https://tgwsikrpibxhbmtgrhbo.supabase.co/rest/v1/\""
             )
-            buildConfigField("String", "NAMADA_INFO", "\"https://namada.info/\"")
+            buildConfigField("String", "NAMADA_INFO_URL", "\"https://namada.info/\"")
         }
 
         release {
