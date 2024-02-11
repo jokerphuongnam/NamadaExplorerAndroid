@@ -1,10 +1,9 @@
 package com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo
 
-import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Block
-import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Validator
+import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
+import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Bond
+import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Transfer
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface TgwsikrpibxhbmtgrhboNetwork {
@@ -15,4 +14,18 @@ interface TgwsikrpibxhbmtgrhboNetwork {
         @Query("limit") limit: Int? = null,
         @Query("offset") offset: Int? = null
     ): List<Block>
+
+    @GET("tx_transfer")
+    suspend fun fetchTransfers(
+        @Query("select") select: String,
+        @Query("limit") limit: Int? = null,
+        @Query("offset") offset: Int? = null
+    ): List<Transfer>
+
+    @GET("tx_bond")
+    suspend fun fetchBonds(
+        @Query("select") select: String,
+        @Query("limit") limit: Int? = null,
+        @Query("offset") offset: Int? = null
+    ): List<Bond>
 }

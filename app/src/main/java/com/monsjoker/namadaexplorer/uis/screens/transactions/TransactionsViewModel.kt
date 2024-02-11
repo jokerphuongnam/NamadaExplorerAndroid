@@ -1,4 +1,4 @@
-package com.monsjoker.namadaexplorer.uis.screens.blocks
+package com.monsjoker.namadaexplorer.uis.screens.transactions
 
 import androidx.lifecycle.ViewModel
 import com.monsjoker.namadaexplorer.data.network.supabase.models.SupabaseOrder
@@ -11,17 +11,20 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class BlocksViewModel @Inject constructor(private val supabaseTgNetwork: TgwsikrpibxhbmtgrhboNetwork) :
-    ViewModel() {
-    val pagingData = supabasePager { page ->
-        supabaseTgNetwork.fetchBlocks(
-            select = SupabaseSelect.blocks.createQueryString(),
-            order = listOf(
-                SupabaseOrder(
-                    field = SupabaseOrder.SortField.HEADER_HEIGHT,
-                    order = SupabaseOrder.SortOrder.DESC
-                )
-            ).createQueryString(),
+class TransactionsViewModel @Inject constructor(
+    private val supabaseTgNetwork: TgwsikrpibxhbmtgrhboNetwork
+) : ViewModel() {
+    val transfersPagingData = supabasePager { page ->
+        supabaseTgNetwork.fetchTransfers(
+            select = SupabaseSelect.empty.createQueryString(),
+            limit = Constants.limitPage,
+            offset = page * Constants.limitPage
+        )
+    }.flow
+
+    val bondsPagingData = supabasePager { page ->
+        supabaseTgNetwork.fetchBonds(
+            select = SupabaseSelect.empty.createQueryString(),
             limit = Constants.limitPage,
             offset = page * Constants.limitPage
         )

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Block
+import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
 import com.monsjoker.namadaexplorer.uis.shared_view.BlockView
 import com.monsjoker.namadaexplorer.uis.shared_view.PagingStateView
 import java.util.Date
@@ -31,7 +31,7 @@ import java.util.Date
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BlocksView(navController: NavController, viewModel: BlocksViewModel = hiltViewModel()) {
-    val pagingValidators = viewModel.pagingData.collectAsLazyPagingItems()
+    val pagingData = viewModel.pagingData.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
@@ -56,39 +56,11 @@ fun BlocksView(navController: NavController, viewModel: BlocksViewModel = hiltVi
     ) { innerPadding ->
         val now = Date()
         PagingStateView(
-            pagingItems = pagingValidators,
-            contentPadding = innerPadding
+            pagingItems = pagingData,
+            contentPadding = innerPadding,
+            emptyText = "Block is empty"
         ) { index, block ->
             BlockView(index = index + 1, now = now, block = block)
-        }
-    }
-}
-
-@Composable
-private fun LazyListScope.BlocksContent(
-    blocks: List<Block>,
-    onLoadMore: () -> Unit
-) {
-    val now = Date()
-
-    Column(
-        modifier = Modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        itemsIndexed(
-            blocks,
-            key = { index, block ->
-                index
-            },
-        ) { index, block ->
-            BlockView(index = index + 1, now = now, block = block)
-
-            if (blocks.size - 10 < index) {
-                onLoadMore()
-            }
-        }
-        item {
-//            LoadMoreView(loadMoreState = loadMoreState, retryAction = onLoadMore)
         }
     }
 }

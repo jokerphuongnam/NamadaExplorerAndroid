@@ -28,7 +28,7 @@ import com.monsjoker.namadaexplorer.uis.shared_view.ValidatorView
 @Composable
 fun ValidatorsView(navController: NavController, viewModel: ValidatorsViewModel = hiltViewModel()) {
     val homeDetailsState = viewModel.homeDetailsState
-    val pagingValidators = viewModel.pagingData.collectAsLazyPagingItems()
+    val pagingData = viewModel.pagingData.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
@@ -57,7 +57,7 @@ fun ValidatorsView(navController: NavController, viewModel: ValidatorsViewModel 
                 .padding(innerPadding)
         ) {
             PagingStateView(
-                pagingItems = pagingValidators,
+                pagingItems = pagingData,
                 emptyText = "Validator Empty",
                 header = {
                     Box(modifier = Modifier.padding(vertical = 32.dp)) {

@@ -12,6 +12,7 @@ import com.monsjoker.namadaexplorer.uis.screens.home.HomeScreen
 import com.monsjoker.namadaexplorer.uis.screens.main.MainScreen
 import com.monsjoker.namadaexplorer.uis.screens.main.data.MainState
 import com.monsjoker.namadaexplorer.uis.screens.parameters.ParametersView
+import com.monsjoker.namadaexplorer.uis.screens.transactions.TransactionsView
 import com.monsjoker.namadaexplorer.uis.screens.validators.ValidatorsView
 import com.monsjoker.namadaexplorer.uis.theme.NamadaExplorerTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +36,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(MainState.BLOCKS.route) {
                         BlocksView(navController = navController)
+                    }
+                    composable(MainState.TRANSACTIONS.route) {
+                        TransactionsView(navController = navController)
                     }
                     composable(MainState.PARAMETERS.route) {
                         ParametersView(navController = navController)

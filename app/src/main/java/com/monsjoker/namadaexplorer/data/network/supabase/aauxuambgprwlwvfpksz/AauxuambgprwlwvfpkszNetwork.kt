@@ -1,6 +1,5 @@
 package com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz
 
-import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Block
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Validator
 import retrofit2.http.GET
 import retrofit2.http.Query

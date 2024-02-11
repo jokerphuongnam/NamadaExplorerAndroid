@@ -1,4 +1,4 @@
-package com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models
+package com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
