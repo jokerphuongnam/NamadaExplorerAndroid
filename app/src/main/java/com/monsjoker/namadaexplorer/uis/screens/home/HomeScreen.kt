@@ -82,7 +82,9 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
             Box(modifier = Modifier.padding(innerPadding)) {
                 when(selectedTab.value) {
                     HomeState.DETAILS -> {
-                        HomeDetailsView(dataState = homeDetailsState)
+                        HomeDetailsView(dataState = homeDetailsState) {
+                            viewModel.loadHomeDetails()
+                        }
                     }
                     HomeState.VALIDATORS -> {
                         HomeValidatorsView(dataState = validatorsState) {

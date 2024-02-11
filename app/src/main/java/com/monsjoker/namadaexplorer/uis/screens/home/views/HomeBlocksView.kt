@@ -11,7 +11,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +26,7 @@ import java.util.Date
 @ExperimentalMaterial3Api
 @Composable
 fun HomeBlocksView(dataState: DataState<List<Block>>, onRetry: (() -> Unit)? = null) {
-    val now = remember { Date() }
+    val now = Date()
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -53,8 +52,8 @@ private fun BlocksView(blocks: List<Block>, now: Date) {
     } else {
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(vertical = 16.dp),
+                .fillMaxSize(),
+            contentPadding = PaddingValues(vertical =  16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             itemsIndexed(blocks) { index, block ->

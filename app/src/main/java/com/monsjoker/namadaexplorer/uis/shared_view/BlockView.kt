@@ -39,7 +39,7 @@ fun BlockView(index: Int, now: Date, block: Block) {
             modifier = Modifier.padding(4.dp)
         ) {
             Text(
-                text = block.height.toString(),
+                text = index.toString(),
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
             )
@@ -48,7 +48,7 @@ fun BlockView(index: Int, now: Date, block: Block) {
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = block.hash,
+                    text = block.blockID,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
@@ -56,20 +56,20 @@ fun BlockView(index: Int, now: Date, block: Block) {
                 )
 
                 Text(
-                    text = block.proposerAddress,
+                    text = block.headerProposerAddress,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = block.numTxs.toString())
+                    Text(text = block.headerHeight.toString())
 
                     Spacer(modifier = Modifier.weight(1f))
 
-                    val timeAgoString = block.time.date?.timeAgoString(now)
+                    val timeAgoString = block.headerTime.date?.timeAgoString(now) ?: block.headerTime
                     Text(
-                        text = timeAgoString ?: block.time,
+                        text = timeAgoString,
                         modifier = Modifier.padding(start = 8.dp),
                     )
                 }

@@ -29,7 +29,8 @@ object AppProviderModule {
     @Provides
     fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().also { interceptor ->
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS)
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         }
 
     @Provides
@@ -39,52 +40,61 @@ object AppProviderModule {
 
     @Singleton
     @Provides
-    fun providesOkHttpClientBuilder(
-        httpLoggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient.Builder {
-        val builder = OkHttpClient.Builder()
+    fun providesAauxuambgprwlwvfpkszNetwork(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        factory: Gson
+    ): AauxuambgprwlwvfpkszNetwork {
+        val client = OkHttpClient.Builder()
             .readTimeout(NetworkUtils.TIME_OUT, TimeUnit.MILLISECONDS)
-            .connectTimeout(NetworkUtils.TIME_OUT, TimeUnit.MILLISECONDS)
-        return if (BuildConfig.DEBUG) {
-            builder.addInterceptor(httpLoggingInterceptor)
-        } else {
-            builder
+            .connectTimeout(NetworkUtils.TIME_OUT, TimeUnit.MILLISECONDS).addInterceptor(AauxuambgprwlwvfpkszInterceptor())
+        if (BuildConfig.DEBUG) {
+            client.addInterceptor(httpLoggingInterceptor)
         }
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.AAUXUAMBGPRWLWVFPKSZ_SUPABASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(factory))
+            .client(client.build())
+            .build()
+            .create()
     }
 
     @Singleton
     @Provides
-    fun providesAauxuambgprwlwvfpkszNetwork(
-        okHttpBuilder: OkHttpClient.Builder,
-        factory: Gson
-    ): AauxuambgprwlwvfpkszNetwork = Retrofit.Builder()
-        .baseUrl(BuildConfig.AAUXUAMBGPRWLWVFPKSZ_SUPABASE_URL)
-        .addConverterFactory(GsonConverterFactory.create(factory))
-        .client(okHttpBuilder.addInterceptor(AauxuambgprwlwvfpkszInterceptor()).build())
-        .build()
-        .create()
-
-    @Singleton
-    @Provides
     fun providesTgwsikrpibxhbmtgrhboNetwork(
-        okHttpBuilder: OkHttpClient.Builder,
+        httpLoggingInterceptor: HttpLoggingInterceptor,
         factory: Gson
-    ): TgwsikrpibxhbmtgrhboNetwork = Retrofit.Builder()
-        .baseUrl(BuildConfig.TGWSIKRPIBXHBMTEGRHBO_SUPABASE_URL)
-        .addConverterFactory(GsonConverterFactory.create(factory))
-        .client(okHttpBuilder.addInterceptor(TgwsikrpibxhbmtgrhboInterceptor()).build())
-        .build()
-        .create()
+    ): TgwsikrpibxhbmtgrhboNetwork {
+        val client = OkHttpClient.Builder()
+            .readTimeout(NetworkUtils.TIME_OUT, TimeUnit.MILLISECONDS)
+            .connectTimeout(NetworkUtils.TIME_OUT, TimeUnit.MILLISECONDS).addInterceptor(TgwsikrpibxhbmtgrhboInterceptor())
+        if (BuildConfig.DEBUG) {
+            client.addInterceptor(httpLoggingInterceptor)
+        }
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.TGWSIKRPIBXHBMTEGRHBO_SUPABASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(factory))
+            .client(client.build())
+            .build()
+            .create()
+    }
 
     @Singleton
     @Provides
     fun providesNamadaInfoNetwork(
-        okHttpBuilder: OkHttpClient.Builder,
+        httpLoggingInterceptor: HttpLoggingInterceptor,
         factory: Gson
-    ): NamadaInfoNetwork = Retrofit.Builder()
-        .baseUrl(BuildConfig.NAMADA_INFO_URL)
-        .addConverterFactory(GsonConverterFactory.create(factory))
-        .client(okHttpBuilder.build())
-        .build()
-        .create()
+    ): NamadaInfoNetwork {
+        val client = OkHttpClient.Builder()
+            .readTimeout(NetworkUtils.TIME_OUT, TimeUnit.MILLISECONDS)
+            .connectTimeout(NetworkUtils.TIME_OUT, TimeUnit.MILLISECONDS)
+        if (BuildConfig.DEBUG) {
+            client.addInterceptor(httpLoggingInterceptor)
+        }
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.NAMADA_INFO_URL)
+            .addConverterFactory(GsonConverterFactory.create(factory))
+            .client(client.build())
+            .build()
+            .create()
+    }
 }

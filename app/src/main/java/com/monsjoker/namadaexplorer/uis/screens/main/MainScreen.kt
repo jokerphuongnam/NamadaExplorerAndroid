@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -15,6 +16,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -33,7 +35,7 @@ fun MainScreen(navController: NavController) {
                         titleContentColor = MaterialTheme.colorScheme.primary,
                     ),
                     title = {
-                        Text(text ="Namada Explorer")
+                        Text(text = "Namada Explorer")
                     }
                 )
             },
@@ -49,27 +51,33 @@ private fun MainContent(navController: NavController, modifier: Modifier) {
         val states = MainState.entries.toTypedArray()
 
         List(size = states.size) { index ->
-            Button(onClick = {
-                navController.navigate(states[index].route)
-            }) {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Yellow,
+                    contentColor = Color.Black
+                ), onClick = {
+                    navController.navigate(states[index].route)
+                }) {
                 Text(
                     text = states[index].title,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.primary)
                 )
             }
         }
 
         val uriHandler = LocalUriHandler.current
-        Button(onClick = {
-            uriHandler.openUri("https://docs.namada.info/")
-        }) {
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Yellow,
+                contentColor = Color.Black
+            ), onClick = {
+                uriHandler.openUri("https://docs.namada.info/")
+            }) {
             Text(
                 text = "Docs",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.primary)
             )
         }
     }

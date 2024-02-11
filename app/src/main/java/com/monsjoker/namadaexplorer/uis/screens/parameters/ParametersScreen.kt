@@ -5,6 +5,7 @@ package com.monsjoker.namadaexplorer.uis.screens.parameters
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -65,8 +66,8 @@ fun ParametersView(navController: NavController, viewModel: ParametersViewModel 
             LazyColumn(
                 modifier = Modifier
                     .background(Color.White)
-                    .padding(horizontal = 12.dp)
                     .padding(innerPadding),
+                contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 item {
@@ -82,7 +83,7 @@ fun ParametersView(navController: NavController, viewModel: ParametersViewModel 
                             fontWeight = FontWeight.Bold,
                             fontSize = 32.sp
                         )
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "Chain ID: ${Constants.chainID}"
                         )

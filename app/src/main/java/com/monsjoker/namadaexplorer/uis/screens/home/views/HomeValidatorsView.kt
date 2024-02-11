@@ -27,7 +27,6 @@ fun HomeValidatorsView(
     dataState: DataState<List<Validator>>,
     retryAction: (() -> Unit)? = null
 ) {
-    Logger.i("HomeValidatorsView", dataState)
     val paddingValues = PaddingValues(
         top = 32.dp,
         bottom = 52.dp + 8.dp
@@ -58,8 +57,8 @@ fun HomeValidatorsView(
                     } else {
                         LazyColumn(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .padding(vertical = 16.dp),
+                                .fillMaxSize(),
+                            contentPadding = PaddingValues(vertical =  16.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             itemsIndexed(

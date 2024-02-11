@@ -5,6 +5,7 @@ class SupabaseOrder(field: SortField, order: SortOrder) {
 
     enum class SortField(val rawValue: String) {
         VOTING_POWER("voting_power"),
+        HEADER_HEIGHT("header_height"),
         HEIGHT("height")
     }
 

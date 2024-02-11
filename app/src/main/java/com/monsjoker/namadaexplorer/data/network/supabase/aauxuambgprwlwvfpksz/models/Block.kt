@@ -6,9 +6,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Block(
-    val height: Int,
-    val hash: String,
-    val time: String,
-    @SerializedName("num_txs") val numTxs: Int,
-    @SerializedName("proposer_address") val proposerAddress: String
+    @SerializedName("block_id")
+    val blockID: String,
+    @SerializedName("header_height")
+    val headerHeight: Long,
+    @SerializedName("header_time")
+    val headerTime: String,
+    @SerializedName("header_proposer_address")
+    val headerProposerAddress: String
 ) : Parcelable

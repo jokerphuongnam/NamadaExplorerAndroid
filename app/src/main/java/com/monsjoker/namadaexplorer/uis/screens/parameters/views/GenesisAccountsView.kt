@@ -59,6 +59,7 @@ fun LazyListScope.GenesisAccountsView(
                     )
                 } else {
                     Column(
+                        modifier = Modifier,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         itemsIndexed(genesisAccounts) { index, genesisAccount ->

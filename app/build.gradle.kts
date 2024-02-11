@@ -117,6 +117,10 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     kapt("androidx.hilt:hilt-compiler:1.1.0")
+
+    implementation("androidx.paging:paging-runtime-ktx:3.2.0")
+    implementation("androidx.paging:paging-compose:3.2.0")
+
 }
 kapt {
     correctErrorTypes = true

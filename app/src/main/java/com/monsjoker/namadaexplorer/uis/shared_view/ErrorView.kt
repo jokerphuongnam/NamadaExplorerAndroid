@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ErrorView(error: Exception, onRetry: (() -> Unit)? = null) {
+fun ErrorView(error: Throwable, onRetry: (() -> Unit)? = null) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -28,14 +29,16 @@ fun ErrorView(error: Exception, onRetry: (() -> Unit)? = null) {
         )
         Button(
             onClick = { onRetry?.invoke() },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Yellow,
+                contentColor = Color.Red
+            ),
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .background(Color.Yellow, shape = RoundedCornerShape(4.dp))
-                .clip(RoundedCornerShape(4.dp))
         ) {
             Text(
                 text = "Retry",
-                color = Color.White
+                color = Color.Red
             )
         }
     }

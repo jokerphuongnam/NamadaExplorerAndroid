@@ -12,6 +12,7 @@ import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.m
 import com.monsjoker.namadaexplorer.data.network.supabase.models.SupabaseOrder
 import com.monsjoker.namadaexplorer.data.network.supabase.models.SupabaseSelect
 import com.monsjoker.namadaexplorer.data.network.supabase.models.createQueryString
+import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.TgwsikrpibxhbmtgrhboNetwork
 import com.monsjoker.namadaexplorer.uis.screens.home.data.HomeDetailsData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,7 +21,8 @@ import javax.inject.Singleton
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    @Singleton private val supabaseAaNetwork: AauxuambgprwlwvfpkszNetwork
+    @Singleton private val supabaseAaNetwork: AauxuambgprwlwvfpkszNetwork,
+    @Singleton private val supabaseTgNetwork: TgwsikrpibxhbmtgrhboNetwork
 ) : ViewModel() {
     var validatorsState by mutableStateOf<DataState<List<Validator>>>(DataState.Loading())
         private set
@@ -106,17 +108,11 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun get10Blocks(): List<Block> {
-        return supabaseAaNetwork.fetchBlocks(
-            select = listOf(
-                SupabaseSelect.HEIGHT,
-                SupabaseSelect.HASH,
-                SupabaseSelect.TIME,
-                SupabaseSelect.NUM_TXS,
-                SupabaseSelect.PROPOSER_ADDRESS
-            ).createQueryString(),
+        return supabaseTgNetwork.fetchBlocks(
+            select = SupabaseSelect.blocks.createQueryString(),
             order = listOf(
                 SupabaseOrder(
-                    SupabaseOrder.SortField.HEIGHT,
+                    SupabaseOrder.SortField.HEADER_HEIGHT,
                     SupabaseOrder.SortOrder.DESC
                 )
             ).createQueryString(),
@@ -127,7 +123,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun setHomeDataState(blocks: List<Block>) {
         homeDetailsState = try {
-            val blockHeight = blocks.maxOfOrNull { it.height } ?: 0
+            val blockHeight = blocks.maxOfOrNull { it.headerHeight } ?: 0
             val validators = supabaseAaNetwork.fetchValidators(
                 select = listOf(SupabaseSelect.VOTING_POWER).createQueryString()
             )

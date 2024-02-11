@@ -7,10 +7,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.monsjoker.namadaexplorer.uis.screens.blocks.BlocksView
 import com.monsjoker.namadaexplorer.uis.screens.home.HomeScreen
 import com.monsjoker.namadaexplorer.uis.screens.main.MainScreen
 import com.monsjoker.namadaexplorer.uis.screens.main.data.MainState
 import com.monsjoker.namadaexplorer.uis.screens.parameters.ParametersView
+import com.monsjoker.namadaexplorer.uis.screens.validators.ValidatorsView
 import com.monsjoker.namadaexplorer.uis.theme.NamadaExplorerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +29,12 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(MainState.HOME.route) {
                         HomeScreen(navController = navController)
+                    }
+                    composable(MainState.VALIDATORS.route) {
+                        ValidatorsView(navController = navController)
+                    }
+                    composable(MainState.BLOCKS.route) {
+                        BlocksView(navController = navController)
                     }
                     composable(MainState.PARAMETERS.route) {
                         ParametersView(navController = navController)

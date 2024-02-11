@@ -13,12 +13,4 @@ interface AauxuambgprwlwvfpkszNetwork {
         @Query("limit") limit: Int? = null,
         @Query("offset") offset: Int? = null
     ): List<Validator>
-
-    @GET("blocks")
-    suspend fun fetchBlocks(
-        @Query("select") select: String,
-        @Query("order") order: String? = null,
-        @Query("limit") limit: Int? = null,
-        @Query("offset") offset: Int? = null
-    ): List<Block>
 }
