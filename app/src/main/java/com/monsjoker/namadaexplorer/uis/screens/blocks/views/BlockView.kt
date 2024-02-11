@@ -1,4 +1,4 @@
-package com.monsjoker.namadaexplorer.uis.shared_view
+package com.monsjoker.namadaexplorer.uis.screens.blocks.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,24 +22,25 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
 import com.monsjoker.namadaexplorer.utils.date
+import com.monsjoker.namadaexplorer.utils.formattedWithCommas
 import com.monsjoker.namadaexplorer.utils.timeAgoString
 import java.util.Date
 
 @Composable
-fun BlockView(index: Int, now: Date, block: Block) {
+fun BlockView(index: Int, now: Date, block: Block, modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .padding(horizontal = 12.dp)
             .background(Color.Yellow)
             .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
+            .border(1.dp, Color.Black, RoundedCornerShape(8.dp)) then modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(4.dp)
         ) {
             Text(
-                text = index.toString(),
+                text = index.formattedWithCommas(),
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
             )
@@ -48,7 +49,7 @@ fun BlockView(index: Int, now: Date, block: Block) {
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = block.blockID,
+                    text = block.blockID.drop(2),
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
@@ -63,7 +64,7 @@ fun BlockView(index: Int, now: Date, block: Block) {
                 )
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = block.headerHeight.toString())
+                    Text(text = block.headerHeight.formattedWithCommas())
 
                     Spacer(modifier = Modifier.weight(1f))
 

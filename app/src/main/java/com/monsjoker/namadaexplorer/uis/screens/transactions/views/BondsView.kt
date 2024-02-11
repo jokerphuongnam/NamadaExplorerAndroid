@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Bond
 import com.monsjoker.namadaexplorer.uis.shared_view.PagingStateView
+import com.monsjoker.namadaexplorer.utils.formattedWithCommas
 
 @Composable
 fun BondsView(pagingItems: LazyPagingItems<Bond>, modifier: Modifier = Modifier) {
@@ -51,7 +52,7 @@ private fun BondView(index: Int, bond: Bond) {
             modifier = Modifier.padding(4.dp)
         ) {
             Text(
-                text = index.toString(),
+                text = index.formattedWithCommas(),
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
             )

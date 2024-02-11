@@ -49,6 +49,20 @@ fun MainScreen(navController: NavController) {
 private fun MainContent(navController: NavController, modifier: Modifier) {
     Column(modifier = modifier.padding(horizontal = 16.dp, vertical = 32.dp)) {
         val states = MainState.entries.toTypedArray()
+        val uriHandler = LocalUriHandler.current
+
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Black,
+                contentColor = Color.Cyan
+            ), onClick = {
+                uriHandler.openUri("https://namada.net/shielded-expedition")
+            }) {
+            Text(
+                text = "Namada Shielded Expedition NEBB ↗",
+                modifier = Modifier
+            )
+        }
 
         List(size = states.size) { index ->
             Button(
@@ -66,7 +80,6 @@ private fun MainContent(navController: NavController, modifier: Modifier) {
             }
         }
 
-        val uriHandler = LocalUriHandler.current
         Button(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Yellow,
@@ -75,7 +88,7 @@ private fun MainContent(navController: NavController, modifier: Modifier) {
                 uriHandler.openUri("https://docs.namada.info/")
             }) {
             Text(
-                text = "Docs",
+                text = "Docs ↗",
                 modifier = Modifier
                     .fillMaxWidth()
             )

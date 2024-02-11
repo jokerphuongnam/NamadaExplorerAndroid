@@ -30,6 +30,7 @@ import com.monsjoker.namadaexplorer.data.network.namada_info.models.GenesisAccou
 import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
 import com.monsjoker.namadaexplorer.uis.shared_view.ProgressView
 import com.monsjoker.namadaexplorer.utils.format
+import com.monsjoker.namadaexplorer.utils.formattedWithCommas
 
 @Composable
 fun LazyListScope.GenesisAccountsView(
@@ -94,7 +95,7 @@ private fun GenesisAccountView(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = index.toString(),
+            text = index.formattedWithCommas(),
             style = typography.bodyLarge.copy(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold

@@ -4,7 +4,7 @@ import java.text.DecimalFormat
 
 private val numberFormat = DecimalFormat("#,###")
 
-fun Int.formattedWithCommas(): String {
+fun Number.formattedWithCommas(): String {
     return numberFormat.format(this)
 }
 

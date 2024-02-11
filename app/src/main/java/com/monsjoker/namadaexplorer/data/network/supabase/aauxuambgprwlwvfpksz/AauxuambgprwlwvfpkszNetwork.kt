@@ -12,4 +12,10 @@ interface AauxuambgprwlwvfpkszNetwork {
         @Query("limit") limit: Int? = null,
         @Query("offset") offset: Int? = null
     ): List<Validator>
+
+    @GET("validators")
+    suspend fun fetchValidator(
+        @Query("select") select: String,
+        @Query("address") address: String
+    ): List<Validator>
 }

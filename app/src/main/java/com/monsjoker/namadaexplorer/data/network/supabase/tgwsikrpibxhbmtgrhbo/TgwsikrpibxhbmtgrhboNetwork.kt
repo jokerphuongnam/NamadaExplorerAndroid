@@ -12,7 +12,8 @@ interface TgwsikrpibxhbmtgrhboNetwork {
         @Query("select") select: String,
         @Query("order") order: String? = null,
         @Query("limit") limit: Int? = null,
-        @Query("offset") offset: Int? = null
+        @Query("offset") offset: Int? = null,
+        @Query("header_proposer_address") headerProposerAddress: String? = null
     ): List<Block>
 
     @GET("tx_transfer")

@@ -1,4 +1,4 @@
-package com.monsjoker.namadaexplorer.uis.shared_view
+package com.monsjoker.namadaexplorer.uis.screens.validators.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,26 +15,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Validator
+import com.monsjoker.namadaexplorer.utils.formattedWithCommas
 
-@Composable fun ValidatorView(index: Int, validator: Validator) {
+@Composable
+fun ValidatorView(modifier: Modifier = Modifier, index: Int, validator: Validator) {
     Box(
         modifier = Modifier
             .padding(horizontal = 12.dp)
             .background(Color.Yellow)
             .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
+            .border(1.dp, Color.Black, RoundedCornerShape(8.dp)) then modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(4.dp)
         ) {
             Text(
-                text = index.toString(),
+                text = index.formattedWithCommas(),
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
             )
@@ -61,9 +63,9 @@ import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.m
                     maxLines = 1
                 )
                 Row(verticalAlignment = Alignment.Bottom) {
-                    Text(text = validator.height.toString())
+                    Text(text = validator.height!!.formattedWithCommas())
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(text = validator.votingPower.toString())
+                    Text(text = (validator.votingPower / 1_000_000).formattedWithCommas())
                 }
             }
         }

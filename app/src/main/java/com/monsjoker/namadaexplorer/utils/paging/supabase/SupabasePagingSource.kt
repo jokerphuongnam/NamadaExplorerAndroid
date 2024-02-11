@@ -2,7 +2,6 @@ package com.monsjoker.namadaexplorer.utils.paging.supabase
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.monsjoker.namadaexplorer.utils.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

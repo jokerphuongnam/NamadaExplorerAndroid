@@ -1,5 +1,6 @@
 package com.monsjoker.namadaexplorer.uis.screens.home.views
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,12 +20,12 @@ import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Validator
 import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
 import com.monsjoker.namadaexplorer.uis.shared_view.ProgressView
-import com.monsjoker.namadaexplorer.uis.shared_view.ValidatorView
-import com.monsjoker.namadaexplorer.utils.Logger
+import com.monsjoker.namadaexplorer.uis.screens.validators.views.ValidatorView
 
 @Composable
 fun HomeValidatorsView(
     dataState: DataState<List<Validator>>,
+    itemClickable: ((Validator) -> Unit)? = null,
     retryAction: (() -> Unit)? = null
 ) {
     val paddingValues = PaddingValues(
@@ -63,11 +64,14 @@ fun HomeValidatorsView(
                         ) {
                             itemsIndexed(
                                 items = validators,
-                                key = { index, validator -> index }
+                                key = { index, _ -> index }
                             ) { index, validator ->
                                 ValidatorView(
                                     index = index + 1,
-                                    validator = validator
+                                    validator = validator,
+                                    modifier = Modifier.clickable {
+                                        itemClickable?.invoke(validator)
+                                    }
                                 )
                             }
                         }
