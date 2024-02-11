@@ -9,7 +9,6 @@ private val dateFormatter = SimpleDateFormat("HH:mm, dd/MM/yyyy", Locale.getDefa
 
 fun Date.timeAgoString(now: Date = Date()): String {
     val timeDifference = TimeUnit.MILLISECONDS.toSeconds(now.time - this.time)
-
     return when {
         timeDifference < 60 -> "Just now"
         timeDifference < 120 -> "1 minute ago"

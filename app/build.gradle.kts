@@ -121,6 +121,7 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:3.2.0")
     implementation("androidx.paging:paging-compose:3.2.0")
 
+    implementation("com.moandjiezana.toml:toml4j:0.7.2")
 }
 kapt {
     correctErrorTypes = true

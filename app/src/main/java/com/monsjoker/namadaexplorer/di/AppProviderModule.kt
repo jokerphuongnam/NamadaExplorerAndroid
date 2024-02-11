@@ -3,6 +3,7 @@ package com.monsjoker.namadaexplorer.di
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.moandjiezana.toml.Toml
 import com.monsjoker.namadaexplorer.BuildConfig
 import com.monsjoker.namadaexplorer.data.network.namada_info.NamadaInfoNetwork
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.AauxuambgprwlwvfpkszInterceptor
@@ -97,4 +98,8 @@ object AppProviderModule {
             .build()
             .create()
     }
+
+    @Singleton
+    @Provides
+    fun providesToml(): Toml = Toml()
 }

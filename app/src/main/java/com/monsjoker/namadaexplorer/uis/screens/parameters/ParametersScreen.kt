@@ -37,6 +37,7 @@ import com.monsjoker.namadaexplorer.utils.Constants
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ParametersView(navController: NavController, viewModel: ParametersViewModel = hiltViewModel()) {
+    val tomlDataState = viewModel.tomlDataState
     val genesisAccountsState = viewModel.genesisAccountsState
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -71,7 +72,9 @@ fun ParametersView(navController: NavController, viewModel: ParametersViewModel 
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 item {
-                    ParametersDetailView()
+                    ParametersDetailView(dataState = tomlDataState) {
+                        viewModel.loadTomlData()
+                    }
                 }
 
                 item {
@@ -81,9 +84,9 @@ fun ParametersView(navController: NavController, viewModel: ParametersViewModel 
                         Text(
                             text = "Genesis Validators",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 32.sp
+                            fontSize = 24.sp
                         )
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = "Chain ID: ${Constants.chainID}"
                         )
