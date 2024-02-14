@@ -6,14 +6,15 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.monsjoker.namadaexplorer.data.domain.DataState
+import com.monsjoker.namadaexplorer.data.network.id_namada_red.ItNamadaRedNetwork
 import com.monsjoker.namadaexplorer.data.network.namada_rpc_hadesguard_tech.NamadaRpcHadesGuardTechNetwork
 import com.monsjoker.namadaexplorer.data.network.namada_rpc_hadesguard_tech.models.ValidatorInfoRequest
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.AauxuambgprwlwvfpkszNetwork
-import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
 import com.monsjoker.namadaexplorer.data.network.supabase.models.SupabaseOrder
 import com.monsjoker.namadaexplorer.data.network.supabase.models.SupabaseSelect
 import com.monsjoker.namadaexplorer.data.network.supabase.models.createQueryString
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.TgwsikrpibxhbmtgrhboNetwork
+import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
 import com.monsjoker.namadaexplorer.uis.screens.home.data.HomeDetailsData
 import com.monsjoker.namadaexplorer.utils.Constants
 import com.monsjoker.namadaexplorer.utils.base64Number
@@ -25,8 +26,9 @@ import javax.inject.Singleton
 
 @HiltViewModel
 class ValidatorsViewModel @Inject constructor(
-    private val supabaseAaNetwork: AauxuambgprwlwvfpkszNetwork,
-    private val supabaseTgNetwork: TgwsikrpibxhbmtgrhboNetwork,
+    @Singleton private val supabaseAaNetwork: AauxuambgprwlwvfpkszNetwork,
+    @Singleton private val supabaseTgNetwork: TgwsikrpibxhbmtgrhboNetwork,
+    @Singleton private val itNamadaRedNetwork: ItNamadaRedNetwork,
     @Singleton private val namadaRpcHadesGuardTechNetwork: NamadaRpcHadesGuardTechNetwork
 ) : ViewModel() {
     val pagingData = supabasePager { page ->
@@ -90,13 +92,17 @@ class ValidatorsViewModel @Inject constructor(
             val validators = supabaseAaNetwork.fetchValidators(
                 select = listOf(SupabaseSelect.VOTING_POWER).createQueryString()
             )
-            val epoch = namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.epoch).result.response.value.base64Number
-            val totalStake = namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.totalStake).result.response.value.base64Number
+            val epoch =
+                namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.epoch).result.response.value.base64Number
+            val totalStake =
+                namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.totalStake).result.response.value.base64Number
+            val governanceProposals = itNamadaRedNetwork.fetchProposals().proposals.size
             val data = HomeDetailsData(
                 epoch = epoch,
                 blockHeight = blockHeight,
                 totalStake = totalStake,
-                validators = validators.size
+                validators = validators.size,
+                governanceProposals = governanceProposals
             )
             DataState.Success(data)
         } catch (e: Exception) {

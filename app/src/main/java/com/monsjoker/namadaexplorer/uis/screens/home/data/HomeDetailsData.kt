@@ -5,5 +5,5 @@ data class HomeDetailsData(
     val blockHeight: Long,
     val totalStake: Long,
     val validators: Int,
-    val governanceProposals: Int = 0
+    val governanceProposals: Int
 )

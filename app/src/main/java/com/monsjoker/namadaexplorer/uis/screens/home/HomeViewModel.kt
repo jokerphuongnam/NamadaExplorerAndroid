@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.monsjoker.namadaexplorer.data.domain.DataState
+import com.monsjoker.namadaexplorer.data.network.id_namada_red.ItNamadaRedNetwork
 import com.monsjoker.namadaexplorer.data.network.namada_rpc_hadesguard_tech.NamadaRpcHadesGuardTechNetwork
 import com.monsjoker.namadaexplorer.data.network.namada_rpc_hadesguard_tech.models.ValidatorInfoRequest
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.AauxuambgprwlwvfpkszNetwork
@@ -26,6 +27,7 @@ import javax.inject.Singleton
 class HomeViewModel @Inject constructor(
     @Singleton private val supabaseAaNetwork: AauxuambgprwlwvfpkszNetwork,
     @Singleton private val supabaseTgNetwork: TgwsikrpibxhbmtgrhboNetwork,
+    @Singleton private val itNamadaRedNetwork: ItNamadaRedNetwork,
     @Singleton private val namadaRpcHadesGuardTechNetwork: NamadaRpcHadesGuardTechNetwork
 ) : ViewModel() {
     var validatorsState by mutableStateOf<DataState<List<Validator>>>(DataState.Loading())
@@ -133,11 +135,13 @@ class HomeViewModel @Inject constructor(
             )
             val epoch = namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.epoch).result.response.value.base64Number
             val totalStake = namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.totalStake).result.response.value.base64Number
+            val governanceProposals = itNamadaRedNetwork.fetchProposals().proposals.size
             val data = HomeDetailsData(
                 epoch = epoch,
                 blockHeight = blockHeight,
                 totalStake = totalStake,
-                validators = validators.size
+                validators = validators.size,
+                governanceProposals = governanceProposals
             )
             DataState.Success(data)
         } catch (e: Exception) {
