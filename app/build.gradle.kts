@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.monsjoker.namadaexplorer"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -37,6 +37,7 @@ android {
             )
             buildConfigField("String", "NAMADA_INFO_URL", "\"https://namada.info/\"")
             buildConfigField("String", "IT_NAMADA_RED_URL", "\"https://it.api.namada.red/api/v1/\"")
+            buildConfigField("String", "NAMADA_RPC_HADESGUARD_TECH_URL", "\"https://namada-rpc.hadesguard.tech/\"")
         }
 
         release {
@@ -58,6 +59,7 @@ android {
             )
             buildConfigField("String", "NAMADA_INFO", "https://namada.info")
             buildConfigField("String", "IT_NAMADA_RED_URL", "\"https://it.api.namada.red/api/v1/\"")
+            buildConfigField("String", "NAMADA_RPC_HADESGUARD_TECH_URL", "\"https://namada-rpc.hadesguard.tech/\"")
         }
     }
 

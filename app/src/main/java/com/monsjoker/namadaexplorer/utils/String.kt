@@ -1,8 +1,10 @@
 package com.monsjoker.namadaexplorer.utils
 
 import java.text.SimpleDateFormat
+import java.util.Base64
 import java.util.Date
 import java.util.Locale
+
 
 private val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault())
 private val dateFormatterWithoutMillis =
@@ -19,4 +21,22 @@ val String.date: Date?
             }
         }
         return null
+    }
+
+val String.base64Number: Long
+    get() {
+        return try {
+            val bytes = Base64.getDecoder().decode(this)
+            if (bytes.size >= 8) {
+                    var number: Long = 0
+                    for (i in 0..7) {
+                        number = number or ((bytes[i].toLong() and 0xFFL) shl (8 * i))
+                    }
+                    number
+                } else {
+                0
+            }
+        } catch (e: IllegalArgumentException) {
+            0
+        }
     }

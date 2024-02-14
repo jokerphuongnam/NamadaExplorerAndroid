@@ -40,7 +40,7 @@ private fun DataView(data: HomeDetailsData) {
     ) {
         Text(label = "Epoch", value = data.epoch)
         Text(label = "Block Height", value = data.blockHeight)
-        Text(label = "Total Stake", value = "${data.totalStake.formattedWithCommas()} NAM")
+        Text(label = "Total Stake", value = "${(data.totalStake.toDouble() / 1_000_000).formattedWithCommas()} NAM")
         Text(label = "Validators", value = data.validators)
         Text(label = "Governance Proposals", value = data.governanceProposals)
         Text(label = "Chain ID", value = Constants.chainID)
