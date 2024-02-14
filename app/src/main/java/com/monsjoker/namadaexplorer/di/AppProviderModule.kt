@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.moandjiezana.toml.Toml
 import com.monsjoker.namadaexplorer.BuildConfig
+import com.monsjoker.namadaexplorer.data.network.id_namada_red.ItNamadaRedNetwork
 import com.monsjoker.namadaexplorer.data.network.namada_info.NamadaInfoNetwork
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.AauxuambgprwlwvfpkszInterceptor
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.AauxuambgprwlwvfpkszNetwork
@@ -93,6 +94,26 @@ object AppProviderModule {
         }
         return Retrofit.Builder()
             .baseUrl(BuildConfig.NAMADA_INFO_URL)
+            .addConverterFactory(GsonConverterFactory.create(factory))
+            .client(client.build())
+            .build()
+            .create()
+    }
+
+    @Singleton
+    @Provides
+    fun providesItNamadaRedNetwork(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        factory: Gson
+    ): ItNamadaRedNetwork {
+        val client = OkHttpClient.Builder()
+            .readTimeout(NetworkUtils.TIME_OUT, TimeUnit.MILLISECONDS)
+            .connectTimeout(NetworkUtils.TIME_OUT, TimeUnit.MILLISECONDS)
+        if (BuildConfig.DEBUG) {
+            client.addInterceptor(httpLoggingInterceptor)
+        }
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.IT_NAMADA_RED_URL)
             .addConverterFactory(GsonConverterFactory.create(factory))
             .client(client.build())
             .build()

@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.monsjoker.namadaexplorer.uis.screens.blocks.BlocksView
+import com.monsjoker.namadaexplorer.uis.screens.governance.GovernanceScreen
 import com.monsjoker.namadaexplorer.uis.screens.home.HomeScreen
 import com.monsjoker.namadaexplorer.uis.screens.main.MainScreen
 import com.monsjoker.namadaexplorer.uis.screens.main.data.MainState
@@ -41,6 +42,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(MainState.TRANSACTIONS.route) {
                         TransactionsView(navController = navController)
+                    }
+                    composable(MainState.GOVERNANCE.route) {
+                        GovernanceScreen(navController = navController)
                     }
                     composable(MainState.PARAMETERS.route) {
                         ParametersView(navController = navController)

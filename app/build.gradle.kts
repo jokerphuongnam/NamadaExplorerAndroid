@@ -36,6 +36,7 @@ android {
                 "\"https://tgwsikrpibxhbmtgrhbo.supabase.co/rest/v1/\""
             )
             buildConfigField("String", "NAMADA_INFO_URL", "\"https://namada.info/\"")
+            buildConfigField("String", "IT_NAMADA_RED_URL", "\"https://it.api.namada.red/api/v1/\"")
         }
 
         release {
@@ -56,6 +57,7 @@ android {
                 "https://tgwsikrpibxhbmtgrhbo.supabase.co/rest/v1/"
             )
             buildConfigField("String", "NAMADA_INFO", "https://namada.info")
+            buildConfigField("String", "IT_NAMADA_RED_URL", "\"https://it.api.namada.red/api/v1/\"")
         }
     }
 
