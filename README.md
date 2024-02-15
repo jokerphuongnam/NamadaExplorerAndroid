@@ -19,7 +19,7 @@ The app features a user-friendly navigation system, enabling users to move betwe
   - Transactions Screen
   - Governance Screen
   - Parameters Screen
-  Additionally, users can access external web links:
+- Additionally, users can access external web links:
   - [Namada Shielded Expedition NEBB](https://namada.net/shielded-expedition)
   - [Documentation](https://docs.namada.info/)
 
@@ -58,4 +58,4 @@ Namada Explorer fetches data from various sources:
 - File Reading (TOML): com.moandjiezana.toml
 - String Parsing: Gson
 - Serialization: Parcelize
-- Minimum SDK Version: 26
+- Minimum SDK Version: 26 (Android 8.0)
