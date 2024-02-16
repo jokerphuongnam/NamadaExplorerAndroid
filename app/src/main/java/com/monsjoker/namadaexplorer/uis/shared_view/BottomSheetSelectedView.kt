@@ -29,7 +29,7 @@ fun BottomSheetSelectedView(text: String, modifier: Modifier = Modifier) {
                 .height(52.dp)
                 .padding(12.dp)
         ) {
-            Text(
+            MiddleEllipsisText(
                 text = text,
                 fontWeight = FontWeight.Bold
             )

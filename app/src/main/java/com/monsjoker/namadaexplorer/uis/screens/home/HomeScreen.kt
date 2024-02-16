@@ -138,7 +138,9 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
             ValidatorBottomSheetView(
                 navController = navController,
                 validator = validatorSelected!!
-            )
+            ) {
+                validatorSelected = null
+            }
         }
     }
 
@@ -152,7 +154,9 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
             BlockBottomSheetView(
                 navController = navController,
                 block = blockSelected!!
-            )
+            ) {
+                blockSelected = null
+            }
         }
     }
 }

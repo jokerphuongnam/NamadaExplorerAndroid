@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Validator
+import com.monsjoker.namadaexplorer.uis.shared_view.MiddleEllipsisText
 import com.monsjoker.namadaexplorer.utils.formattedWithCommas
 
 @Composable
@@ -51,16 +52,14 @@ fun ValidatorView(modifier: Modifier = Modifier, index: Int, validator: Validato
                         fontSize = 10.sp
                     )
                 }
-                Text(
+                MiddleEllipsisText(
                     text = validator.address!!,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1
+                    textAlign = TextAlign.Center
                 )
-                Text(
+                MiddleEllipsisText(
                     text = validator.pubKey!!,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1
+                    textAlign = TextAlign.Center
                 )
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(text = validator.height!!.formattedWithCommas())

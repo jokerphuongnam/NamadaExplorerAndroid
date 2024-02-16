@@ -18,7 +18,8 @@ import com.monsjoker.namadaexplorer.uis.shared_view.BottomSheetSelectedView
 fun BlockBottomSheetView(
     navController: NavController,
     block: Block,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
@@ -35,6 +36,7 @@ fun BlockBottomSheetView(
             BottomSheetSelectedView(
                 text = block.headerProposerAddress,
                 modifier = Modifier.clickable {
+                    onClick?.invoke()
                     navBackStackEntry?.savedStateHandle?.set(
                         "validator_address",
                         block.headerProposerAddress

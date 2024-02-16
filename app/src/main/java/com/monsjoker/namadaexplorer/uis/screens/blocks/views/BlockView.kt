@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
+import com.monsjoker.namadaexplorer.uis.shared_view.MiddleEllipsisText
 import com.monsjoker.namadaexplorer.utils.date
 import com.monsjoker.namadaexplorer.utils.formattedWithCommas
 import com.monsjoker.namadaexplorer.utils.timeAgoString
@@ -48,19 +49,15 @@ fun BlockView(index: Int, now: Date, block: Block, modifier: Modifier = Modifier
             Spacer(modifier = Modifier.width(4.dp))
 
             Column(modifier = Modifier.weight(1f)) {
-                Text(
+                MiddleEllipsisText(
                     text = block.blockID.drop(2),
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
                 )
 
-                Text(
+                MiddleEllipsisText(
                     text = block.headerProposerAddress,
                     textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
                 )
 
                 Row(verticalAlignment = Alignment.CenterVertically) {

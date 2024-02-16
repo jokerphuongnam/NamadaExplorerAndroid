@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Transfer
+import com.monsjoker.namadaexplorer.uis.shared_view.MiddleEllipsisText
 import com.monsjoker.namadaexplorer.uis.shared_view.PagingStateView
 import com.monsjoker.namadaexplorer.utils.formattedWithCommas
 
@@ -76,38 +77,28 @@ private fun TransferView(index: Int, transfer: Transfer) {
                     Text(text = transfer.amount)
                 }
 
-                Text(
+                MiddleEllipsisText(
                     text = transfer.txID.drop(2),
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
                 )
-                Text(
+                MiddleEllipsisText(
                     text = transfer.source,
                     textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
                 )
-                Text(
+                MiddleEllipsisText(
                     text = transfer.target,
                     textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
                 )
-                Text(
+                MiddleEllipsisText(
                     text = transfer.token,
                     textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
                 )
 
                 if (transfer.key != null) {
-                    Text(
+                    MiddleEllipsisText(
                         text = transfer.key,
                         textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
