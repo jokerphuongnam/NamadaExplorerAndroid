@@ -1,5 +1,4 @@
 @file:OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
     ExperimentalMaterial3Api::class
 )
 
@@ -91,7 +90,9 @@ fun BlocksView(navController: NavController, viewModel: BlocksViewModel = hiltVi
             BlockBottomSheetView(
                 navController = navController,
                 block = blockSelected!!
-            )
+            ) {
+                blockSelected = null
+            }
         }
     }
 }

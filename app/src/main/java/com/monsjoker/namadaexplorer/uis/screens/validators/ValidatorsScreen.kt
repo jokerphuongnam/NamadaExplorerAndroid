@@ -1,6 +1,4 @@
 @file:OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
     ExperimentalMaterial3Api::class
 )
 
@@ -107,7 +105,9 @@ fun ValidatorsView(navController: NavController, viewModel: ValidatorsViewModel 
             ValidatorBottomSheetView(
                 navController = navController,
                 validator = validatorSelected!!
-            )
+            ) {
+                validatorSelected = null
+            }
         }
     }
 }

@@ -20,3 +20,6 @@ local.properties
 .idea/misc.xml
 .idea/inspectionProfiles/Project_Default.xml
 .idea/deploymentTargetDropDown.xml
+.name
+codeStyleConfig.xml
+Project.xml

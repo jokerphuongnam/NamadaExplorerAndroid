@@ -22,12 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.namada_info.models.GenesisAccount
 import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
+import com.monsjoker.namadaexplorer.uis.shared_view.MiddleEllipsisText
 import com.monsjoker.namadaexplorer.uis.shared_view.ProgressView
 import com.monsjoker.namadaexplorer.utils.format
 import com.monsjoker.namadaexplorer.utils.formattedWithCommas
@@ -106,35 +108,34 @@ private fun GenesisAccountView(
         Spacer(modifier = Modifier.width(8.dp))
 
         Column {
-            Text(
-                text = genesisAccount.alias,
-                style = typography.bodyMedium.copy(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 4.dp)
-            )
-            Text(
-                text = genesisAccount.netAddress,
-                style = typography.bodyMedium,
-                modifier = Modifier.fillMaxWidth()
-            )
-            Column(modifier = Modifier.padding(vertical = 4.dp)) {
+            Row {
                 Text(
+                    text = genesisAccount.alias,
+                    style = typography.bodyMedium.copy(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                    ),
+                    modifier = Modifier
+                        .padding(bottom = 4.dp)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = genesisAccount.netAddress,
+                    style = typography.bodyMedium,
+                )
+            }
+            Column(modifier = Modifier.padding(vertical = 4.dp)) {
+                MiddleEllipsisText(
                     text = genesisAccount.hashedKey,
                     style = typography.bodyMedium,
-                    modifier = Modifier.fillMaxWidth(),
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier,
                 )
-                Text(
+                MiddleEllipsisText(
                     text = genesisAccount.address,
                     style = typography.bodyMedium,
-                    modifier = Modifier.fillMaxWidth(),
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier,
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
