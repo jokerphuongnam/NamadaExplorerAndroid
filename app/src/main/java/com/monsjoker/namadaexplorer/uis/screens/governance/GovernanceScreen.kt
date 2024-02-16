@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.monsjoker.namadaexplorer.uis.screens.governance
 
@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.monsjoker.namadaexplorer.data.domain.DataState
@@ -52,7 +53,7 @@ fun GovernanceScreen(
                         titleContentColor = MaterialTheme.colorScheme.primary,
                     ),
                     title = {
-                        Text(text = "Home")
+                        Text(text = "Governance")
                     },
                     navigationIcon = {
                         IconButton(onClick = { navController.navigateUp() }) {
@@ -109,6 +110,16 @@ private fun ProposalsView(data: List<Proposal>) {
             contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            item {
+                Box(modifier = Modifier.padding(all = 12.dp)) {
+                    Text(
+                        text = "Proposals",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
+                }
+            }
+
             itemsIndexed(data) { index, proposal ->
                 ProposalView(index = index + 1, proposal = proposal)
             }

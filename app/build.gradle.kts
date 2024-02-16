@@ -37,7 +37,11 @@ android {
             )
             buildConfigField("String", "NAMADA_INFO_URL", "\"https://namada.info/\"")
             buildConfigField("String", "IT_NAMADA_RED_URL", "\"https://it.api.namada.red/api/v1/\"")
-            buildConfigField("String", "NAMADA_RPC_HADESGUARD_TECH_URL", "\"https://namada-rpc.hadesguard.tech/\"")
+            buildConfigField(
+                "String",
+                "NAMADA_RPC_HADESGUARD_TECH_URL",
+                "\"https://namada-rpc.hadesguard.tech/\""
+            )
         }
 
         release {
@@ -59,7 +63,11 @@ android {
             )
             buildConfigField("String", "NAMADA_INFO", "https://namada.info")
             buildConfigField("String", "IT_NAMADA_RED_URL", "\"https://it.api.namada.red/api/v1/\"")
-            buildConfigField("String", "NAMADA_RPC_HADESGUARD_TECH_URL", "\"https://namada-rpc.hadesguard.tech/\"")
+            buildConfigField(
+                "String",
+                "NAMADA_RPC_HADESGUARD_TECH_URL",
+                "\"https://namada-rpc.hadesguard.tech/\""
+            )
         }
     }
 
@@ -107,6 +115,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
     implementation("androidx.compose.foundation:foundation:1.6.1")
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
 
     val nav_version = "2.7.7"
