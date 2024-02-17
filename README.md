@@ -23,17 +23,29 @@ The app features a user-friendly navigation system, enabling users to move betwe
 Additionally, users can access external web links:
   - [Namada Shielded Expedition NEBB](https://namada.net/shielded-expedition)
 
-- **Home Screen**: Displays essential statistics such as epoch, block height, total stake, validators, Governance Proposals, and Chain ID. It also showcases the top 10 validators and top 10 blocks.
+## Home Screen <a name="home-screen"></a>
 
-- **Validators Screen**: Provides statistics and a comprehensive list of all validators.
+Displays essential statistics such as epoch, block height, total stake, validators, Governance Proposals, and Chain ID. It also showcases the top 10 validators and top 10 blocks.
 
-- **Blocks Screen**: Shows a list of all blocks on the blockchain.
+## Validators Screen <a name="validators-screen"></a>
 
-- **Transactions Screen**: Displays transfer and bond transactions.
+Provides statistics and a comprehensive list of all validators.
 
-- **Governance Screen**: Shows proposals related to governance.
+## Blocks Screen <a name="blocks-screen"></a>
 
-- **Parameters Screen**: Provides information on various parameters including Genesis Parameters, Chain Parameters, Proof of Stake Parameters, Governance Parameters, and Genesis Validators.
+Shows a list of all blocks on the blockchain.
+
+## Transactions Screen <a name="transactions-screen"></a>
+
+Displays transfer and bond transactions.
+
+## Governance Screen <a name="governance-screen"></a>
+
+Shows proposals related to governance.
+
+## Parameters Screen <a name="parameters-screen"></a>
+
+Provides information on various parameters including Genesis Parameters, Chain Parameters, Proof of Stake Parameters, Governance Parameters, and Genesis Validators.
 
 ### Details
 
