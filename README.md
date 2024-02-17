@@ -12,16 +12,16 @@ You can install Namada Explorer by downloading the provided APK file from the re
 
 The app features a user-friendly navigation system, enabling users to move between different screens:
 
-- **Main Screen**: From the main screen, users can navigate to:
-  - Home Screen
-  - Validators Screen
-  - Blocks Screen
-  - Transactions Screen
-  - Governance Screen
-  - Parameters Screen
-- Additionally, users can access external web links:
+- **Main Screen**: Users can navigate to:
+ - [Home Screen](#home-screen)
+ - [Validators Screen](#validators-screen)
+ - [Blocks Screen](#blocks-screen)
+ - [Transactions Screen](#transactions-screen)
+ - [Governance Screen](#governance-screen)
+ - [Parameters Screen](#parameters-screen)
+  
+Additionally, users can access external web links:
   - [Namada Shielded Expedition NEBB](https://namada.net/shielded-expedition)
-  - [Documentation](https://docs.namada.info/)
 
 - **Home Screen**: Displays essential statistics such as epoch, block height, total stake, validators, Governance Proposals, and Chain ID. It also showcases the top 10 validators and top 10 blocks.
 
@@ -35,15 +35,16 @@ The app features a user-friendly navigation system, enabling users to move betwe
 
 - **Parameters Screen**: Provides information on various parameters including Genesis Parameters, Chain Parameters, Proof of Stake Parameters, Governance Parameters, and Genesis Validators.
 
-### Validator Details
+### Details
 
-Users can click on items from validators and blocks to get the validator's address and navigate to the Validator Detail screen. 
+Users can click on items from validators, blocks, transactions, proposals, and Genesis Validators to view detailed information. If the item is a block, users can click on the validator's address to go to the Validator Detail Screen.
 
 - **Validator Detail Screen**: Displays detailed information about a validator and the latest 10 blocks from the validator.
 
 ### Data Sources
 
 Namada Explorer fetches data from various sources:
+
 - [Supabase Instance 1](https://aauxuambgprwlwvfpksz.supabase.co)
 - [Supabase Instance 2](https://tgwsikrpibxhbmtgrhbo.supabase.co)
 - [Namada Website](https://namada.info)
