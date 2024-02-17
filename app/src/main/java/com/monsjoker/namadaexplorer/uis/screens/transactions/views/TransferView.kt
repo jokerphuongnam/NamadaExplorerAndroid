@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -86,6 +88,7 @@ private fun TransferView(index: Int, transfer: Transfer) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(2.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.ic_money),
@@ -93,11 +96,17 @@ private fun TransferView(index: Int, transfer: Transfer) {
                             modifier = Modifier.height(24.dp)
                         )
                         Text(
-                            text = transfer.amount.toDouble().formattedWithCommas(),
+                            text = "${transfer.amount.toDouble().formattedWithCommas()} NAAN",
                             fontWeight = FontWeight.Bold
                         )
 
                         Spacer(modifier = Modifier.weight(1f))
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_validators),
+                            contentDescription = "Money",
+                            modifier = Modifier.size(20.dp),
+                        )
 
                         Text(
                             text = if (transfer.shielded == null) {

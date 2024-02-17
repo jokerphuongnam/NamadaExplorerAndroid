@@ -14,6 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -33,7 +35,7 @@ import com.monsjoker.namadaexplorer.uis.screens.transactions.views.TransfersView
 import com.monsjoker.namadaexplorer.utils.visibility
 
 @Composable
-fun TransactionsView(
+fun TransactionsScreen(
     navController: NavController,
     viewModel: TransactionsViewModel = hiltViewModel()
 ) {
@@ -41,31 +43,12 @@ fun TransactionsView(
     val transfersPagingData = viewModel.transfersPagingData.collectAsLazyPagingItems()
     val bondsPagingData = viewModel.bondsPagingData.collectAsLazyPagingItems()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
-                title = {
-                    Text(text = "Transactions")
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                }
-            )
-        },
-    ) { innerPadding ->
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.White
+    ) {
         Column(
             modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
         ) {
             TabRow(
                 selectedTabIndex = selectedTab.value.ordinal,

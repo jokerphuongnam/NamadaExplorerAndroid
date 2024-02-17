@@ -87,7 +87,7 @@ private fun BondView(index: Int, bond: Bond) {
                     )
 
                     Text(
-                        text = bond.amount.toDouble().formattedWithCommas(),
+                        text = "${bond.amount.toDouble().formattedWithCommas()} NAAN",
                         fontWeight = FontWeight.Bold
                     )
                 }
