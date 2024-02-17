@@ -37,10 +37,6 @@ import java.util.Date
 @Composable
 fun BlocksView(navController: NavController, viewModel: BlocksViewModel = hiltViewModel()) {
     val pagingData = viewModel.pagingData.collectAsLazyPagingItems()
-    val sheetState = rememberModalBottomSheetState()
-    var blockSelected by rememberSaveable {
-        mutableStateOf<Block?>(null)
-    }
 
     Scaffold(
         topBar = {
@@ -71,28 +67,11 @@ fun BlocksView(navController: NavController, viewModel: BlocksViewModel = hiltVi
         ) { index, block ->
             BlockView(
                 index = index + 1,
+                navController = navController,
                 now = now,
                 block = block,
-                modifier = Modifier.clickable {
-                    blockSelected = block
-                }
+                modifier = Modifier
             )
-        }
-    }
-
-    if (blockSelected != null) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = {
-                blockSelected = null
-            }
-        ) {
-            BlockBottomSheetView(
-                navController = navController,
-                block = blockSelected!!
-            ) {
-                blockSelected = null
-            }
         }
     }
 }

@@ -36,14 +36,6 @@ fun ValidatorView(modifier: Modifier = Modifier, index: Int, validator: Validato
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(4.dp)
         ) {
-            Text(
-                text = index.formattedWithCommas(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
-            )
-
-            Spacer(modifier = Modifier.width(4.dp))
-
             Column {
                 Row {
                     Spacer(modifier = Modifier.weight(1f))
@@ -55,10 +47,6 @@ fun ValidatorView(modifier: Modifier = Modifier, index: Int, validator: Validato
                 MiddleEllipsisText(
                     text = validator.address!!,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-                MiddleEllipsisText(
-                    text = validator.pubKey!!,
                     textAlign = TextAlign.Center
                 )
                 Row(verticalAlignment = Alignment.Bottom) {

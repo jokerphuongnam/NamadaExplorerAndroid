@@ -1,7 +1,10 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.monsjoker.namadaexplorer.uis.screens.parameters.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,28 +12,32 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.namada_info.models.GenesisAccount
 import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
-import com.monsjoker.namadaexplorer.uis.shared_view.MiddleEllipsisText
 import com.monsjoker.namadaexplorer.uis.shared_view.ProgressView
+import com.monsjoker.namadaexplorer.uis.shared_view.Text
 import com.monsjoker.namadaexplorer.utils.format
 import com.monsjoker.namadaexplorer.utils.formattedWithCommas
 
@@ -85,9 +92,17 @@ private fun GenesisAccountView(
     index: Int,
     genesisAccount: GenesisAccount,
 ) {
+    val sheetState = rememberModalBottomSheetState()
+    var isShowBottomSheet by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     val typography = MaterialTheme.typography
     Row(
         modifier = Modifier
+            .clickable {
+                isShowBottomSheet = true
+            }
             .clip(RoundedCornerShape(8.dp))
             .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
             .background(Color.Yellow)
@@ -96,17 +111,6 @@ private fun GenesisAccountView(
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = index.formattedWithCommas(),
-            style = typography.bodyLarge.copy(
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            ),
-            modifier = Modifier.padding(bottom = 4.dp)
-        )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
         Column {
             Row {
                 Text(
@@ -125,24 +129,12 @@ private fun GenesisAccountView(
                 )
             }
             Column(modifier = Modifier.padding(vertical = 4.dp)) {
-                MiddleEllipsisText(
-                    text = genesisAccount.hashedKey,
-                    style = typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier,
-                )
-                MiddleEllipsisText(
-                    text = genesisAccount.address,
-                    style = typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier,
-                )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = genesisAccount.bondAmount,
+                        text = genesisAccount.bondAmount.toDouble().formattedWithCommas(),
                         style = typography.bodyMedium
                     )
                     val commissionRate = genesisAccount.commissionRate.toDoubleOrNull()
@@ -160,6 +152,77 @@ private fun GenesisAccountView(
                     }
                 }
             }
+        }
+    }
+
+    if (isShowBottomSheet) {
+        ModalBottomSheet(
+            sheetState = sheetState,
+            onDismissRequest = {
+                isShowBottomSheet = false
+            }
+        ) {
+            GenesisAccountDetailsBottomSheetView(
+                genesisAccount = genesisAccount,
+                modifier = Modifier
+            )
+        }
+    }
+}
+
+@Composable
+private fun GenesisAccountDetailsBottomSheetView(
+    genesisAccount: GenesisAccount,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 12.dp)
+            .padding(bottom = 32.dp) then modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            text = genesisAccount.alias,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp
+        )
+
+        Column(
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+
+            val commissionRate = genesisAccount.commissionRate.toDouble()
+            val maxCommissionRateChange =
+                genesisAccount.maxCommissionRateChange.toDouble()
+            Text(
+                label = "Commission rate",
+                value = "${(commissionRate * 100).format(2)}%"
+            )
+            Text(
+                label = "Max commission rate change",
+                value = "${(maxCommissionRateChange * 100).format(2)}%"
+            )
+            Text(
+                label = "Net address",
+                value = genesisAccount.netAddress
+            )
+            Text(
+                label = "Bound",
+                value = genesisAccount.bondAmount.toDouble()
+            )
+            Text(
+                label = "Consensus key",
+                value = genesisAccount.consensusKeyPk.uppercase()
+            )
+            Text(
+                label = "Hashed key",
+                value = genesisAccount.hashedKey
+            )
+            Text(
+                label = "Address",
+                value = genesisAccount.address.uppercase()
+            )
         }
     }
 }

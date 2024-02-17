@@ -46,9 +46,15 @@ private fun DataView(data: TomlData) {
             )
             Text(label = "Max Proposal Bytes", value = data.parameters.maxProposalBytes!!)
             Text(label = "Epochs per Year", value = data.parameters.epochsPerYear!!)
-            Text(label = "Max Signatures per Transaction", value = data.parameters.maxSignaturesPerTransaction!!)
+            Text(
+                label = "Max Signatures per Transaction",
+                value = data.parameters.maxSignaturesPerTransaction!!
+            )
             Text(label = "Max Block Gas", value = data.parameters.maxBlockGas!!)
-            Text(label = "Fee Unshielding Descriptions Limit", value = data.parameters.feeUnshieldingGasLimit!!)
+            Text(
+                label = "Fee Unshielding Descriptions Limit",
+                value = data.parameters.feeUnshieldingGasLimit!!
+            )
         }
 
         Section(sectionTitle = "Proof of Stake Parameters") {
@@ -60,10 +66,22 @@ private fun DataView(data: TomlData) {
             Text(label = "Block Vote Reward", value = data.posParams.blockVoteReward!!)
             Text(label = "Max Inflation Rate", value = data.posParams.maxInflationRate!!)
             Text(label = "Target Staked Ratio", value = data.posParams.targetStakedRatio!!)
-            Text(label = "Duplicate Vote Min Slash Rate", value = data.posParams.duplicateVoteMinSlashRate!!)
-            Text(label = "Light Client Attack Min Slash Rate", value = data.posParams.lightClientAttackMinSlashRate!!)
-            Text(label = "Cubic Slashing Window Length", value = data.posParams.cubicSlashingWindowLength!!)
-            Text(label = "Validator Stake Threshold", value = data.posParams.validatorStakeThreshold!!)
+            Text(
+                label = "Duplicate Vote Min Slash Rate",
+                value = data.posParams.duplicateVoteMinSlashRate!!
+            )
+            Text(
+                label = "Light Client Attack Min Slash Rate",
+                value = data.posParams.lightClientAttackMinSlashRate!!
+            )
+            Text(
+                label = "Cubic Slashing Window Length",
+                value = data.posParams.cubicSlashingWindowLength!!
+            )
+            Text(
+                label = "Validator Stake Threshold",
+                value = data.posParams.validatorStakeThreshold!!.toInt()
+            )
             Text(label = "Liveness Window Check", value = data.posParams.livenessWindowCheck!!)
             Text(label = "Liveness Threshold", value = data.posParams.livenessThreshold!!)
             Text(label = "Rewards Gain P", value = data.posParams.rewardsGainP!!)
@@ -73,10 +91,19 @@ private fun DataView(data: TomlData) {
         Section(sectionTitle = "Governance Parameters") {
             Text(label = "Min Proposal Fund", value = data.govParams.minProposalFund!!)
             Text(label = "Max Proposal Code Size", value = data.govParams.maxProposalCodeSize!!)
-            Text(label = "Min Proposal Voting Period", value = data.govParams.minProposalVotingPeriod!!)
+            Text(
+                label = "Min Proposal Voting Period",
+                value = data.govParams.minProposalVotingPeriod!!
+            )
             Text(label = "Max Proposal Period", value = data.govParams.maxProposalPeriod!!)
-            Text(label = "Max Proposal Content Size", value = data.govParams.maxProposalContentSize!!)
-            Text(label = "Min Proposal Grace Epochs", value = data.govParams.minProposalGraceEpochs!!)
+            Text(
+                label = "Max Proposal Content Size",
+                value = data.govParams.maxProposalContentSize!!
+            )
+            Text(
+                label = "Min Proposal Grace Epochs",
+                value = data.govParams.minProposalGraceEpochs!!
+            )
         }
     }
 }

@@ -81,10 +81,6 @@ private fun MainContent(navController: NavController, modifier: Modifier) {
                 navController.navigate(states[index].route)
             }
         }
-
-        SelectedButton(title = "Docs ↗") {
-            uriHandler.openUri("https://docs.namada.info/")
-        }
     }
 }
 

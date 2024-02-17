@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
 import com.monsjoker.namadaexplorer.uis.screens.blocks.views.BlockView
@@ -20,6 +20,7 @@ import java.util.Date
 
 fun LazyListScope.validatorDetailBlocks(
     dataState: DataState<List<Block>>,
+    navController: NavController,
     onRetry: (() -> Unit)? = null
 ) {
     when (dataState) {
@@ -31,7 +32,11 @@ fun LazyListScope.validatorDetailBlocks(
 
         is DataState.Success -> {
             val now = Date()
-            dataView(dataState.data, now = now)
+            dataView(
+                dataState.data,
+                now = now,
+                navController = navController
+            )
         }
 
         is DataState.Error -> {
@@ -44,7 +49,11 @@ fun LazyListScope.validatorDetailBlocks(
     }
 }
 
-private fun LazyListScope.dataView(data: List<Block>, now: Date) {
+private fun LazyListScope.dataView(
+    data: List<Block>,
+    now: Date,
+    navController: NavController,
+) {
     if (data.isEmpty()) {
         item {
             Box(modifier = Modifier.padding(horizontal = 12.dp)) {
@@ -57,7 +66,12 @@ private fun LazyListScope.dataView(data: List<Block>, now: Date) {
         }
     } else {
         itemsIndexed(data) { index, block ->
-            BlockView(index = index + 1, now = now, block = block)
+            BlockView(
+                index = index + 1,
+                navController = navController,
+                now = now,
+                block = block
+            )
         }
     }
 }

@@ -39,12 +39,7 @@ data class Proposal(
     @Parcelize
     enum class Result(val value: String) : Parcelable {
         Pending("Pending"),
-        VotingPeriod("VotingPeriod");
-
-        companion object {
-            fun fromValue(value: String): Result {
-                return values().first { it.value == value }
-            }
-        }
+        VotingPeriod("VotingPeriod"),
+        Rejected("Rejected");
     }
 }

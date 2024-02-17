@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -93,7 +94,7 @@ fun ValidatorDetailsView(
                 modifier = Modifier
                     .background(Color.White)
                     .padding(innerPadding),
-                contentPadding = PaddingValues(vertical = 16.dp),
+                contentPadding = PaddingValues(vertical = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 item {
@@ -101,8 +102,10 @@ fun ValidatorDetailsView(
                         text = validatorAddress,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
-                        fontSize = 14.sp,
-                        modifier = Modifier.padding(horizontal = 12.dp)
+                        fontSize = 24.sp,
+                        modifier = Modifier
+                            .padding(horizontal = 12.dp)
+                            .fillMaxWidth()
                     )
                 }
 
@@ -124,7 +127,10 @@ fun ValidatorDetailsView(
                     }
                 }
 
-                validatorDetailBlocks(dataState = blocksState)
+                validatorDetailBlocks(
+                    dataState = blocksState,
+                    navController = navController
+                )
             }
         }
     }

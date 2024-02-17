@@ -30,28 +30,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Validator
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
 import com.monsjoker.namadaexplorer.uis.screens.blocks.views.BlockBottomSheetView
 import com.monsjoker.namadaexplorer.uis.screens.home.data.HomeState
 import com.monsjoker.namadaexplorer.uis.screens.home.views.HomeBlocksView
 import com.monsjoker.namadaexplorer.uis.screens.home.views.HomeDetailsView
 import com.monsjoker.namadaexplorer.uis.screens.home.views.HomeValidatorsView
-import com.monsjoker.namadaexplorer.uis.screens.validators.views.ValidatorBottomSheetView
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltViewModel()) {
-    val selectedTab = remember { mutableStateOf(HomeState.DETAILS) }
+    val selectedTab = rememberSaveable { mutableStateOf(HomeState.DETAILS) }
     val homeDetailsState = viewModel.homeDetailsState
     val validatorsState = viewModel.validatorsState
     val blocksState = viewModel.blocksState
-    val sheetState = rememberModalBottomSheetState()
-    var validatorSelected by rememberSaveable {
-        mutableStateOf<Validator?>(null)
-    }
-    var blockSelected by rememberSaveable {
-        mutableStateOf<Block?>(null)
-    }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -106,7 +99,11 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                     HomeState.VALIDATORS -> {
                         HomeValidatorsView(dataState = validatorsState,
                             itemClickable = { validator ->
-                                validatorSelected = validator
+                                navBackStackEntry?.savedStateHandle?.set(
+                                    "validator_address",
+                                    validator.address
+                                )
+                                navController.navigate("validator")
                             }
                         ) {
                             viewModel.load10Validators()
@@ -115,47 +112,13 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
 
                     HomeState.BLOCKS -> {
                         HomeBlocksView(
-                            dataState = blocksState, itemClickable = { block ->
-                                blockSelected = block
-                            }
+                            dataState = blocksState,
+                            navController = navController
                         ) {
                             viewModel.load10Blocks()
                         }
                     }
                 }
-            }
-        }
-    }
-
-
-    if (validatorSelected != null) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = {
-                validatorSelected = null
-            }
-        ) {
-            ValidatorBottomSheetView(
-                navController = navController,
-                validator = validatorSelected!!
-            ) {
-                validatorSelected = null
-            }
-        }
-    }
-
-    if (blockSelected != null) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = {
-                blockSelected = null
-            }
-        ) {
-            BlockBottomSheetView(
-                navController = navController,
-                block = blockSelected!!
-            ) {
-                blockSelected = null
             }
         }
     }

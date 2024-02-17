@@ -1,6 +1,5 @@
 package com.monsjoker.namadaexplorer.uis.screens.home.views
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
 import com.monsjoker.namadaexplorer.uis.screens.blocks.views.BlockView
@@ -25,7 +25,7 @@ import java.util.Date
 @Composable
 fun HomeBlocksView(
     dataState: DataState<List<Block>>,
-    itemClickable: ((Block) -> Unit)? = null,
+    navController: NavController,
     onRetry: (() -> Unit)? = null
 ) {
     val now = Date()
@@ -41,9 +41,9 @@ fun HomeBlocksView(
             when (dataState) {
                 is DataState.Loading -> ProgressView()
                 is DataState.Success -> BlocksView(
+                    navController = navController,
                     dataState.data,
                     now,
-                    itemClickable = itemClickable
                 )
 
                 is DataState.Error -> ErrorView(error = dataState.error, onRetry = onRetry)
@@ -54,9 +54,9 @@ fun HomeBlocksView(
 
 @Composable
 private fun BlocksView(
+    navController: NavController,
     blocks: List<Block>,
     now: Date,
-    itemClickable: ((Block) -> Unit)? = null,
 ) {
     if (blocks.isEmpty()) {
         Text("Block is empty", fontWeight = FontWeight.Bold)
@@ -70,11 +70,10 @@ private fun BlocksView(
             itemsIndexed(blocks) { index, block ->
                 BlockView(
                     index = index + 1,
+                    navController = navController,
                     now = now,
                     block = block,
-                    modifier = Modifier.clickable {
-                        itemClickable?.invoke(block)
-                    }
+                    modifier = Modifier
                 )
             }
         }

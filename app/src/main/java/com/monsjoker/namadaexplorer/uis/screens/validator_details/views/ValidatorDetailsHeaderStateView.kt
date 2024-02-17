@@ -4,10 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Validator
 import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
@@ -35,6 +33,7 @@ private fun DataView(data: Validator) {
     ) {
         Text(label = "Voting Power", value = (data.votingPower / 1_000_000).formattedWithCommas())
         Text(label = "Last Seen", value = data.height!!.formattedWithCommas())
+        Text(label = "Public key", value = data.pubKey!!.uppercase())
         Spacer(modifier = Modifier.fillMaxHeight())
     }
 }
