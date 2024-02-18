@@ -1,28 +1,54 @@
 package com.monsjoker.namadaexplorer.uis.screens.parameters.views
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.monsjoker.namadaexplorer.R
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.local.models.TomlData
 import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
-import com.monsjoker.namadaexplorer.uis.shared_view.ProgressView
 import com.monsjoker.namadaexplorer.uis.shared_view.Text
 import com.monsjoker.namadaexplorer.utils.Constants
 import com.monsjoker.namadaexplorer.utils.stringDate
+import kotlinx.coroutines.flow.collectLatest
 import java.util.Date
 
 @Composable
 fun ParametersDetailView(dataState: DataState<TomlData>, onRetry: (() -> Unit)? = null) {
     when (dataState) {
-        is DataState.Loading -> ProgressView()
+        is DataState.Loading -> Box {}
         is DataState.Success -> DataView(dataState.data)
         is DataState.Error -> ErrorView(error = dataState.error, onRetry = onRetry)
     }
@@ -110,20 +136,103 @@ private fun DataView(data: TomlData) {
 
 @Composable
 private fun Section(sectionTitle: String, content: @Composable ColumnScope.() -> Unit) {
-    Column(
-        modifier = Modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Text(
-            text = sectionTitle,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp
-        )
-
-        Column(
-            modifier = Modifier.padding(horizontal = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
-            content = content
-        )
+    var isShowContent by rememberSaveable {
+        mutableStateOf(true)
     }
+    val rotation = smoothRotation(if (isShowContent) 0f else 180f)
+    val animatedRotation by animateFloatAsState(
+        targetValue = rotation.value,
+        animationSpec = tween(
+            durationMillis = 400,
+            easing = LinearOutSlowInEasing
+        ),
+        label = "FloatAnimation"
+    )
+
+    Card(
+        shape = RoundedCornerShape(0.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Card(
+                shape = RoundedCornerShape(0.dp),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 8.dp
+                ),
+                onClick = {
+                    isShowContent = !isShowContent
+                }
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = sectionTitle,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        modifier = Modifier
+                            .weight(1f)
+                    )
+
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_up_arrow),
+                        contentDescription = "Up",
+                        modifier = Modifier
+                            .size(20.dp)
+                            .rotate(animatedRotation)
+                    )
+                }
+            }
+
+            AnimatedVisibility(
+                visible = isShowContent,
+                enter = fadeIn(animationSpec = tween(200)),
+                exit = fadeOut(animationSpec = tween(200))
+            ) {
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(2.dp),
+                    content = content
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun smoothRotation(rotation: Float): MutableState<Float> {
+    val storedRotation = remember { mutableStateOf(rotation) }
+
+    // Sample data
+    // current angle 340 -> new angle 10 -> diff -330 -> +30
+    // current angle 20 -> new angle 350 -> diff 330 -> -30
+    // current angle 60 -> new angle 270 -> diff 210 -> -150
+    // current angle 260 -> new angle 10 -> diff -250 -> +110
+
+    LaunchedEffect(rotation) {
+        snapshotFlow { rotation }
+            .collectLatest { newRotation ->
+                val diff = newRotation - storedRotation.value
+                val shortestDiff = when {
+                    diff > 180 -> diff - 360
+                    diff < -180 -> diff + 360
+                    else -> diff
+                }
+                storedRotation.value = storedRotation.value + shortestDiff
+            }
+    }
+
+    return storedRotation
 }

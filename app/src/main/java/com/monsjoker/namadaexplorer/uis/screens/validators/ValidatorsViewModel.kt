@@ -96,11 +96,15 @@ class ValidatorsViewModel @Inject constructor(
                 namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.epoch).result.response.value.base64Number
             val totalStake =
                 namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.totalStake).result.response.value.base64Number
+            val allStake =
+                supabaseAaNetwork.fetchValidators(listOf(SupabaseSelect.VOTING_POWER).createQueryString())
+                    .sumOf { it.votingPower.toDouble() / 1_000_000 }.toLong()
             val governanceProposals = itNamadaRedNetwork.fetchProposals().proposals.size
             val data = HomeDetailsData(
                 epoch = epoch,
                 blockHeight = blockHeight,
                 totalStake = totalStake,
+                allState = allStake,
                 validators = validators.size,
                 governanceProposals = governanceProposals
             )

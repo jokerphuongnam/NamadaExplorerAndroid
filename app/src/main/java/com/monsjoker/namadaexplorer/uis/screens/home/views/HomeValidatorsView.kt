@@ -1,13 +1,15 @@
 package com.monsjoker.namadaexplorer.uis.screens.home.views
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,9 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Validator
-import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
-import com.monsjoker.namadaexplorer.uis.shared_view.ProgressView
+import com.monsjoker.namadaexplorer.uis.screens.validators.views.ValidatorShimmerView
 import com.monsjoker.namadaexplorer.uis.screens.validators.views.ValidatorView
+import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
 
 @Composable
 fun HomeValidatorsView(
@@ -34,16 +36,25 @@ fun HomeValidatorsView(
     )
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surfaceContainer),
         contentAlignment = Alignment.TopCenter
     ) {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = Color.White
+            color = Color.Transparent
         ) {
             when (dataState) {
                 is DataState.Loading -> {
-                    ProgressView()
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.padding(vertical = 16.dp)
+                    ) {
+                        for (index in 0..9) {
+                            ValidatorShimmerView()
+                        }
+                    }
                 }
 
                 is DataState.Success -> {
@@ -59,7 +70,7 @@ fun HomeValidatorsView(
                         LazyColumn(
                             modifier = Modifier
                                 .fillMaxSize(),
-                            contentPadding = PaddingValues(vertical =  16.dp),
+                            contentPadding = PaddingValues(vertical = 16.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             itemsIndexed(
@@ -69,10 +80,10 @@ fun HomeValidatorsView(
                                 ValidatorView(
                                     index = index + 1,
                                     validator = validator,
-                                    modifier = Modifier.clickable {
-                                        itemClickable?.invoke(validator)
-                                    }
-                                )
+                                    modifier = Modifier
+                                ) {
+                                    itemClickable?.invoke(validator)
+                                }
                             }
                         }
                     }

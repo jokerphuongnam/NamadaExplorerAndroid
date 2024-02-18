@@ -3,17 +3,19 @@
 package com.monsjoker.namadaexplorer.uis.screens.transactions.views
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -24,8 +26,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import com.monsjoker.namadaexplorer.R
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Bond
+import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLineFullWidth
+import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLine
 import com.monsjoker.namadaexplorer.uis.shared_view.MiddleEllipsisText
 import com.monsjoker.namadaexplorer.uis.shared_view.PagingStateView
 import com.monsjoker.namadaexplorer.uis.shared_view.Text
@@ -44,7 +46,17 @@ fun BondsView(pagingItems: LazyPagingItems<Bond>, modifier: Modifier = Modifier)
     PagingStateView(
         modifier = modifier,
         pagingItems = pagingItems,
-        emptyText = "Transfer is empty"
+        contentPadding = PaddingValues(vertical = 16.dp),
+        emptyText = "Transfer is empty",
+        loading = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                for (index in 0..9) {
+                    BondShimmerView()
+                }
+            }
+        }
     ) { index, bond ->
         BondView(index = index + 1, bond = bond)
     }
@@ -57,19 +69,23 @@ private fun BondView(index: Int, bond: Bond) {
         mutableStateOf(false)
     }
 
-    Box(
-        modifier = Modifier
-            .padding(horizontal = 12.dp)
-            .background(Color.Yellow)
-            .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
-            .clickable {
-                isShowBottomSheet = true
-            }
+    Card(
+        shape = RoundedCornerShape(0.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+        onClick = {
+            isShowBottomSheet = true
+        },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(4.dp)
+                .padding(horizontal = 12.dp)
+                .fillMaxWidth()
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 MiddleEllipsisText(
@@ -140,6 +156,34 @@ private fun BondDetailsBottomSheetView(bond: Bond, modifier: Modifier = Modifier
                 label = "Validator",
                 value = bond.validator.uppercase()
             )
+        }
+    }
+}
+
+@Composable
+private fun BondShimmerView() {
+    Card(
+        shape = RoundedCornerShape(0.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(4.dp)
+                .padding(horizontal = 12.dp)
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                ComponentRectangleLineFullWidth()
+                Row(verticalAlignment = Alignment.Bottom) {
+                    ComponentRectangleLine()
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
         }
     }
 }

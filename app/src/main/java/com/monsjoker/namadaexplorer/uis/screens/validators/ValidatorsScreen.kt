@@ -1,25 +1,23 @@
-@file:OptIn(
-    ExperimentalMaterial3Api::class
-)
-
 package com.monsjoker.namadaexplorer.uis.screens.validators
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.monsjoker.namadaexplorer.uis.screens.home.views.HomeDetailsView
+import com.monsjoker.namadaexplorer.uis.screens.validators.views.ValidatorShimmerView
 import com.monsjoker.namadaexplorer.uis.screens.validators.views.ValidatorView
 import com.monsjoker.namadaexplorer.uis.shared_view.PagingStateView
 
@@ -34,7 +32,7 @@ fun ValidatorsScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         Box(
             modifier = Modifier
@@ -50,20 +48,28 @@ fun ValidatorsScreen(
                         )
                     }
                 },
-                content = { index, validator ->
-                    ValidatorView(
-                        index = index + 1,
-                        validator = validator,
-                        modifier = Modifier.clickable {
-                            navBackStackEntry?.savedStateHandle?.set(
-                                "validator_address",
-                                validator.address
-                            )
-                            navController.navigate("validator")
-                        }
+                loading = {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                         for(index in 0..9) {
+                             ValidatorShimmerView()
+                         }
+                    }
+                },
+            ) { index, validator ->
+                ValidatorView(
+                    index = index + 1,
+                    validator = validator,
+                    modifier = Modifier
+                ) {
+                    navBackStackEntry?.savedStateHandle?.set(
+                        "validator_address",
+                        validator.address
                     )
+                    navController.navigate("validator")
                 }
-            )
+            }
         }
     }
 }

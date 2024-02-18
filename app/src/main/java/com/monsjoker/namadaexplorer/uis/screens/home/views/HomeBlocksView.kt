@@ -1,11 +1,14 @@
 package com.monsjoker.namadaexplorer.uis.screens.home.views
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
+import com.monsjoker.namadaexplorer.uis.screens.blocks.views.BlockShimmerView
 import com.monsjoker.namadaexplorer.uis.screens.blocks.views.BlockView
 import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
-import com.monsjoker.namadaexplorer.uis.shared_view.ProgressView
 import java.util.Date
 
 @Composable
@@ -31,15 +34,26 @@ fun HomeBlocksView(
     val now = Date()
 
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surfaceContainer),
+        contentAlignment = Alignment.TopCenter,
     ) {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = Color.White
+            color = Color.Transparent
         ) {
             when (dataState) {
-                is DataState.Loading -> ProgressView()
+                is DataState.Loading -> {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        for (index in 0..9) {
+                            BlockShimmerView()
+                        }
+                    }
+                }
+
                 is DataState.Success -> BlocksView(
                     navController = navController,
                     dataState.data,

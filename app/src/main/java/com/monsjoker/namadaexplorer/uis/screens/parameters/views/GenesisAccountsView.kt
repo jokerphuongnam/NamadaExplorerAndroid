@@ -2,9 +2,6 @@
 
 package com.monsjoker.namadaexplorer.uis.screens.parameters.views
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -27,16 +26,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.namada_info.models.GenesisAccount
+import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLine
 import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
-import com.monsjoker.namadaexplorer.uis.shared_view.ProgressView
 import com.monsjoker.namadaexplorer.uis.shared_view.Text
 import com.monsjoker.namadaexplorer.utils.format
 import com.monsjoker.namadaexplorer.utils.formattedWithCommas
@@ -51,11 +48,16 @@ fun LazyListScope.GenesisAccountsView(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 12.dp)
     ) {
         when (genesisAccountsState) {
             is DataState.Loading -> {
-                ProgressView()
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    for (index in 0..9) {
+                        GenesisAccountShimmerView()
+                    }
+                }
             }
 
             is DataState.Success -> {
@@ -98,57 +100,64 @@ private fun GenesisAccountView(
     }
 
     val typography = MaterialTheme.typography
-    Row(
-        modifier = Modifier
-            .clickable {
-                isShowBottomSheet = true
-            }
-            .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
-            .background(Color.Yellow)
-            .padding(vertical = 8.dp)
-            .padding(8.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+
+    Card(
+        shape = RoundedCornerShape(0.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+        onClick = {
+            isShowBottomSheet = true
+        },
     ) {
-        Column {
-            Row {
-                Text(
-                    text = genesisAccount.alias,
-                    style = typography.bodyMedium.copy(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                    ),
-                    modifier = Modifier
-                        .padding(bottom = 4.dp)
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text = genesisAccount.netAddress,
-                    style = typography.bodyMedium,
-                )
-            }
-            Column(modifier = Modifier.padding(vertical = 4.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
+        Row(
+            modifier = Modifier
+                .padding(4.dp)
+                .padding(horizontal = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Row {
                     Text(
-                        text = genesisAccount.bondAmount.toDouble().formattedWithCommas(),
-                        style = typography.bodyMedium
+                        text = genesisAccount.alias,
+                        style = typography.bodyMedium.copy(
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                        ),
+                        modifier = Modifier
+                            .padding(bottom = 4.dp)
                     )
-                    val commissionRate = genesisAccount.commissionRate.toDoubleOrNull()
-                    val maxCommissionRateChange =
-                        genesisAccount.maxCommissionRateChange.toDoubleOrNull()
-                    if (commissionRate != null && maxCommissionRateChange != null) {
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        text = genesisAccount.netAddress,
+                        style = typography.bodyMedium,
+                    )
+                }
+                Column(modifier = Modifier.padding(vertical = 4.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
                         Text(
-                            text = "${(commissionRate * 100).format(2)}% / ${
-                                (maxCommissionRateChange * 100).format(
-                                    2
-                                )
-                            }%",
+                            text = genesisAccount.bondAmount.toDouble().formattedWithCommas(),
                             style = typography.bodyMedium
                         )
+                        val commissionRate = genesisAccount.commissionRate.toDoubleOrNull()
+                        val maxCommissionRateChange =
+                            genesisAccount.maxCommissionRateChange.toDoubleOrNull()
+                        if (commissionRate != null && maxCommissionRateChange != null) {
+                            Text(
+                                text = "${(commissionRate * 100).format(2)}% / ${
+                                    (maxCommissionRateChange * 100).format(
+                                        2
+                                    )
+                                }%",
+                                style = typography.bodyMedium
+                            )
+                        }
                     }
                 }
             }
@@ -223,6 +232,44 @@ private fun GenesisAccountDetailsBottomSheetView(
                 label = "Address",
                 value = genesisAccount.address.uppercase()
             )
+        }
+    }
+}
+
+@Composable
+private fun GenesisAccountShimmerView() {
+    Card(
+        shape = RoundedCornerShape(0.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(4.dp)
+                .padding(horizontal = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Row {
+                    ComponentRectangleLine(width = 200.dp)
+                    Spacer(modifier = Modifier.weight(1f))
+                    ComponentRectangleLine(width = 250.dp)
+                }
+                Column(modifier = Modifier.padding(vertical = 4.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        ComponentRectangleLine(width = 150.dp)
+                        Spacer(modifier = Modifier.weight(1f))
+                        ComponentRectangleLine(width = 100.dp)
+                    }
+                }
+            }
         }
     }
 }

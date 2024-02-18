@@ -10,12 +10,12 @@ import com.monsjoker.namadaexplorer.data.network.id_namada_red.ItNamadaRedNetwor
 import com.monsjoker.namadaexplorer.data.network.namada_rpc_hadesguard_tech.NamadaRpcHadesGuardTechNetwork
 import com.monsjoker.namadaexplorer.data.network.namada_rpc_hadesguard_tech.models.ValidatorInfoRequest
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.AauxuambgprwlwvfpkszNetwork
-import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
 import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Validator
 import com.monsjoker.namadaexplorer.data.network.supabase.models.SupabaseOrder
 import com.monsjoker.namadaexplorer.data.network.supabase.models.SupabaseSelect
 import com.monsjoker.namadaexplorer.data.network.supabase.models.createQueryString
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.TgwsikrpibxhbmtgrhboNetwork
+import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
 import com.monsjoker.namadaexplorer.uis.screens.home.data.HomeDetailsData
 import com.monsjoker.namadaexplorer.utils.base64Number
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,7 +42,6 @@ class HomeViewModel @Inject constructor(
     private var isBlocksLoaded = false
 
     init {
-        load10Validators()
         loadHomeDetails()
     }
 
@@ -133,13 +132,19 @@ class HomeViewModel @Inject constructor(
             val validators = supabaseAaNetwork.fetchValidators(
                 select = listOf(SupabaseSelect.VOTING_POWER).createQueryString()
             )
-            val epoch = namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.epoch).result.response.value.base64Number
-            val totalStake = namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.totalStake).result.response.value.base64Number
+            val epoch =
+                namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.epoch).result.response.value.base64Number
+            val totalStake =
+                namadaRpcHadesGuardTechNetwork.fetcVaidatorsInfo(request = ValidatorInfoRequest.totalStake).result.response.value.base64Number
+            val allStake =
+                supabaseAaNetwork.fetchValidators(listOf(SupabaseSelect.VOTING_POWER).createQueryString())
+                    .sumOf { it.votingPower.toDouble() / 1_000_000 }.toLong()
             val governanceProposals = itNamadaRedNetwork.fetchProposals().proposals.size
             val data = HomeDetailsData(
                 epoch = epoch,
                 blockHeight = blockHeight,
                 totalStake = totalStake,
+                allState = allStake,
                 validators = validators.size,
                 governanceProposals = governanceProposals
             )

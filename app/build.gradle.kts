@@ -40,7 +40,7 @@ android {
             buildConfigField(
                 "String",
                 "NAMADA_RPC_HADESGUARD_TECH_URL",
-                "\"https://namada-rpc.hadesguard.tech/\""
+                "\"https://rpc-namada.staker.space/\""
             )
         }
 
@@ -66,7 +66,7 @@ android {
             buildConfigField(
                 "String",
                 "NAMADA_RPC_HADESGUARD_TECH_URL",
-                "\"https://namada-rpc.hadesguard.tech/\""
+                "\"https://rpc-namada.staker.space/\""
             )
         }
     }
@@ -133,6 +133,8 @@ dependencies {
     implementation("androidx.paging:paging-compose:3.2.0")
 
     implementation("com.moandjiezana.toml:toml4j:0.7.2")
+
+    implementation("me.onebone:toolbar-compose:2.3.5")
 }
 kapt {
     correctErrorTypes = true

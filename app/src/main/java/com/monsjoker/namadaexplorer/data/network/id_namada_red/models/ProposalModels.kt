@@ -22,7 +22,7 @@ data class Proposal(
     val endEpoch: Long,
     @SerializedName("grace_epoch")
     val graceEpoch: Long,
-    val result: Result,
+    val result: String,
     @SerializedName("yay_votes")
     val yayVotes: String,
     @SerializedName("nay_votes")
@@ -30,6 +30,10 @@ data class Proposal(
     @SerializedName("abstain_votes")
     val abstainVotes: String
 ) : Parcelable {
+    val resultEnum: Result?
+        get() {
+            return Result.fromValue(result)
+        }
     @Parcelize
     data class Author(
         @SerializedName("Account")
@@ -41,5 +45,11 @@ data class Proposal(
         Pending("Pending"),
         VotingPeriod("VotingPeriod"),
         Rejected("Rejected");
+
+        companion object {
+            fun fromValue(value: String): Result? {
+                return entries.firstOrNull { it.value == value }
+            }
+        }
     }
 }

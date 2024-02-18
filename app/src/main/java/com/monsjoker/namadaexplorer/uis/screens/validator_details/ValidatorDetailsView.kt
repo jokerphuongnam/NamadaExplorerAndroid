@@ -4,7 +4,6 @@ package com.monsjoker.namadaexplorer.uis.screens.validator_details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -13,8 +12,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,7 +31,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -67,17 +69,22 @@ fun ValidatorDetailsView(
     }
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         Scaffold(
             topBar = {
                 TopAppBar(
+                    modifier = Modifier
+                        .shadow(8.dp),
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         titleContentColor = MaterialTheme.colorScheme.primary,
                     ),
                     title = {
-                        Text(text = "Validator Details")
+                        Text(
+                            text = "Validator Details",
+                            fontWeight = FontWeight.Bold
+                        )
                     },
                     navigationIcon = {
                         IconButton(onClick = { navController.navigateUp() }) {
@@ -92,27 +99,38 @@ fun ValidatorDetailsView(
         ) { innerPadding ->
             LazyColumn(
                 modifier = Modifier
-                    .background(Color.White)
-                    .padding(innerPadding),
+                    .padding(innerPadding)
+                    .background(MaterialTheme.colorScheme.surfaceContainer),
                 contentPadding = PaddingValues(vertical = 20.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 item {
-                    Text(
-                        text = validatorAddress,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        fontSize = 24.sp,
-                        modifier = Modifier
-                            .padding(horizontal = 12.dp)
-                            .fillMaxWidth()
-                    )
-                }
+                    Card(
+                        shape = RoundedCornerShape(0.dp),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 0.dp
+                        ),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        ),
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            Text(
+                                text = validatorAddress,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                fontSize = 24.sp,
+                                modifier = Modifier
+                                    .padding(horizontal = 12.dp)
+                                    .fillMaxWidth()
+                            )
 
-                item {
-                    Box(modifier = Modifier.padding(horizontal = 12.dp)) {
-                        ValidatorDetailsHeaderStateView(dataState = validatorState) {
-                            viewModel.loadValidator(validatorAddress = validatorAddress)
+                            ValidatorDetailsHeaderStateView(dataState = validatorState) {
+                                viewModel.loadValidator(validatorAddress = validatorAddress)
+                            }
                         }
                     }
                 }
@@ -121,7 +139,11 @@ fun ValidatorDetailsView(
                     Column(modifier = Modifier.padding(horizontal = 12.dp)) {
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        Text(text = "Latest 10 Blocks from Validator")
+                        Text(
+                            text = "Latest 10 Blocks from Validator:",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp
+                        )
 
                         Spacer(modifier = Modifier.height(8.dp))
                     }

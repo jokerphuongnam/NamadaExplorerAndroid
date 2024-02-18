@@ -28,7 +28,9 @@ class GovernanceViewModel @Inject constructor(
         proposalsState = DataState.Loading()
         viewModelScope.launch {
             proposalsState = try {
-                val proposals = itNamadaRedNetwork.fetchProposals().proposals
+                val proposals = itNamadaRedNetwork.fetchProposals().proposals.sortedBy { proposal ->
+                    proposal.id
+                }
                 DataState.Success(data = proposals)
             } catch (e: Exception) {
                 DataState.Error(error = e)

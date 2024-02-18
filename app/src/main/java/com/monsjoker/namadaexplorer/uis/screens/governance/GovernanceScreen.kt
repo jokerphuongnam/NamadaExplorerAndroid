@@ -4,17 +4,18 @@ package com.monsjoker.namadaexplorer.uis.screens.governance
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,9 +23,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.id_namada_red.models.Proposal
+import com.monsjoker.namadaexplorer.uis.screens.governance.views.ProposalShimmerView
 import com.monsjoker.namadaexplorer.uis.screens.governance.views.ProposalView
 import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
-import com.monsjoker.namadaexplorer.uis.shared_view.ProgressView
 
 @Composable
 fun GovernanceScreen(
@@ -35,7 +36,7 @@ fun GovernanceScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         Box(
             modifier = Modifier
@@ -52,7 +53,23 @@ private fun ProposalsStateView(
 ) {
     when (dataState) {
         is DataState.Loading -> {
-            ProgressView()
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier
+                    .padding(vertical = 16.dp)
+            ) {
+                Box(modifier = Modifier.padding(all = 12.dp)) {
+                    Text(
+                        text = "Proposals",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
+                }
+
+                for (index in 0..9) {
+                    ProposalShimmerView()
+                }
+            }
         }
 
         is DataState.Success -> {

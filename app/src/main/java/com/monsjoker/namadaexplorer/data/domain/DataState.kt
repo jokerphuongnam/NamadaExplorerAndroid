@@ -1,9 +1,14 @@
 package com.monsjoker.namadaexplorer.data.domain
 
 sealed interface DataState<T> {
-    class Loading<T>: DataState<T>
-    class Success<T>(val data: T): DataState<T>
-    class Error<T>(val error: Throwable): DataState<T>
+    class Loading<T> : DataState<T>
+    class Success<T>(val data: T) : DataState<T>
+    class Error<T>(val error: Throwable) : DataState<T>
+
+    val isLoading: Boolean
+        get() {
+            return this is Loading
+        }
 
     val value: T?
         get() {

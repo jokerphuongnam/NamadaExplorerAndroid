@@ -4,7 +4,6 @@ package com.monsjoker.namadaexplorer.uis.screens.governance.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,7 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -36,9 +38,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monsjoker.namadaexplorer.data.network.id_namada_red.models.Proposal
 import com.monsjoker.namadaexplorer.uis.shared_view.BottomSheetSelectedView
+import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLineFullWidth
+import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLine
 import com.monsjoker.namadaexplorer.uis.shared_view.ProgressBarMultipleValue
 import com.monsjoker.namadaexplorer.uis.shared_view.ProgressBarValue
 import com.monsjoker.namadaexplorer.uis.shared_view.Text
+import com.monsjoker.namadaexplorer.uis.theme.DarkGreen
+import com.monsjoker.namadaexplorer.uis.theme.DarkRed
+import com.monsjoker.namadaexplorer.uis.theme.DarkYellow
+import com.monsjoker.namadaexplorer.uis.theme.LightGreen
+import com.monsjoker.namadaexplorer.uis.theme.LightRed
+import com.monsjoker.namadaexplorer.uis.theme.LightYellow
 
 
 @Composable
@@ -48,17 +58,23 @@ fun ProposalView(index: Int, proposal: Proposal, modifier: Modifier = Modifier) 
         mutableStateOf(false)
     }
 
-    Box(
-        modifier = Modifier
-            .padding(horizontal = 12.dp)
-            .background(Color.Yellow)
-            .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
-            .clickable {
-                isShowBottomSheet = true
-            } then modifier
+    Card(
+        shape = RoundedCornerShape(0.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+        onClick = {
+            isShowBottomSheet = true
+        },
     ) {
-        Column(modifier = Modifier.padding(4.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(4.dp)
+                .padding(horizontal = 12.dp)
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(vertical = 4.dp)
@@ -71,22 +87,25 @@ fun ProposalView(index: Int, proposal: Proposal, modifier: Modifier = Modifier) 
                         Box(
                             modifier = Modifier
                                 .background(
-                                    color = when (proposal.result) {
-                                        Proposal.Result.Pending -> Color.Yellow
-                                        Proposal.Result.VotingPeriod -> Color.Green
-                                        Proposal.Result.Rejected -> Color.Red
+                                    color = when (proposal.resultEnum) {
+                                        Proposal.Result.Pending -> Color.LightYellow
+                                        Proposal.Result.VotingPeriod -> Color.LightGreen
+                                        Proposal.Result.Rejected -> Color.LightRed
+                                        else -> Color.Transparent
                                     },
                                     shape = RoundedCornerShape(4.dp)
                                 )
                         ) {
                             Text(
-                                text = proposal.result.value,
+                                text = proposal.resultEnum?.value ?: proposal.result,
                                 fontSize = 12.sp,
-                                color = if (proposal.result == Proposal.Result.Rejected) {
-                                    Color.White
-                                } else {
-                                    Color.Black
+                                color = when (proposal.resultEnum) {
+                                    Proposal.Result.Pending -> Color.DarkYellow
+                                    Proposal.Result.VotingPeriod -> Color.DarkGreen
+                                    Proposal.Result.Rejected -> Color.DarkRed
+                                    else -> Color.Black
                                 },
+
                                 modifier = Modifier
                                     .padding(horizontal = 4.dp)
                             )
@@ -117,7 +136,7 @@ fun ProposalView(index: Int, proposal: Proposal, modifier: Modifier = Modifier) 
                                 .height(5.dp)
                                 .clip(RoundedCornerShape(2.5.dp))
                         ) {
-                            if (proposal.result == Proposal.Result.Pending) {
+                            if (proposal.resultEnum == Proposal.Result.Pending) {
                                 Box(
                                     modifier = Modifier
                                         .background(Color.White)
@@ -193,7 +212,7 @@ private fun ProposalDetailsBottomSheetView(proposal: Proposal, modifier: Modifie
                 Text(label = "Kind", value = proposal.kind)
             }
             item {
-                Text(label = "Result", value = proposal.result.value)
+                Text(label = "Result", value = proposal.resultEnum?.value ?: proposal.result)
             }
             item {
                 Text(label = "Start epoch", value = proposal.startEpoch)
@@ -219,6 +238,49 @@ private fun ProposalDetailsBottomSheetView(proposal: Proposal, modifier: Modifie
                     text = proposal.content,
                     isBoolContent = false
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun ProposalShimmerView() {
+    Card(
+        shape = RoundedCornerShape(0.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(vertical = 4.dp)
+                .padding(horizontal = 12.dp)
+        ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp ),
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    ComponentRectangleLine()
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    ComponentRectangleLine()
+                }
+                Row(
+                    modifier = Modifier,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ComponentRectangleLine(width = 50.dp)
+
+                    ComponentRectangleLineFullWidth(height = 5.dp)
+                }
             }
         }
     }
