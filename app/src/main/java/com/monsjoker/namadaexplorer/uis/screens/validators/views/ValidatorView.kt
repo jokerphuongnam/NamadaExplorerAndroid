@@ -31,7 +31,7 @@ fun ValidatorView(
     onClick: (() -> Unit)? = null
 ) {
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -75,7 +75,7 @@ fun ValidatorView(
 @Composable
 fun ValidatorShimmerView() {
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),

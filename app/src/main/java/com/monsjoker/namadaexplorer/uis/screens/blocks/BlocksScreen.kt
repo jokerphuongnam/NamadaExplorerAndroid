@@ -32,7 +32,7 @@ fun BlocksScreen(navController: NavController, viewModel: BlocksViewModel = hilt
         PagingStateView(
             pagingItems = pagingData,
             emptyText = "Block is empty",
-            contentPadding = PaddingValues(vertical = 16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp, horizontal = 12.dp),
             loading = {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.monsjoker.namadaexplorer.uis.screens.parameters.views.GenesisAccountsView
+import com.monsjoker.namadaexplorer.uis.screens.parameters.views.genesisAccountsView
 import com.monsjoker.namadaexplorer.uis.screens.parameters.views.ParametersDetailView
 import com.monsjoker.namadaexplorer.utils.Constants
 
@@ -44,7 +44,7 @@ fun ParametersScreen(
     ) {
         LazyColumn(
             modifier = Modifier,
-            contentPadding = PaddingValues(vertical = 16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp, horizontal = 12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {
@@ -54,17 +54,20 @@ fun ParametersScreen(
             }
 
             item {
-                Column(
-                    modifier = Modifier.padding(top = 32.dp)
+                Card(
+                    shape = RoundedCornerShape(8.dp),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 8.dp
+                    ),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    )
                 ) {
                     Card(
                         shape = RoundedCornerShape(0.dp),
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 8.dp
                         ),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer
-                        )
                     ) {
                         Column(
                             modifier = Modifier
@@ -83,13 +86,12 @@ fun ParametersScreen(
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    this@LazyColumn.GenesisAccountsView(
-                        genesisAccountsState = genesisAccountsState
-                    )
                 }
             }
+
+            this@LazyColumn.genesisAccountsView(
+                genesisAccountsState = genesisAccountsState
+            )
         }
     }
 }

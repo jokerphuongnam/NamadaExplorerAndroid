@@ -59,7 +59,7 @@ fun ProposalView(index: Int, proposal: Proposal, modifier: Modifier = Modifier) 
     }
 
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -175,6 +175,7 @@ fun ProposalView(index: Int, proposal: Proposal, modifier: Modifier = Modifier) 
     if (isShowBottomSheet) {
         ModalBottomSheet(
             sheetState = sheetState,
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
             onDismissRequest = {
                 isShowBottomSheet = false
             }
@@ -246,7 +247,7 @@ private fun ProposalDetailsBottomSheetView(proposal: Proposal, modifier: Modifie
 @Composable
 fun ProposalShimmerView() {
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),

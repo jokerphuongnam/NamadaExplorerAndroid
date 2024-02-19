@@ -3,6 +3,7 @@ package com.monsjoker.namadaexplorer.uis.screens.validators
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,6 +41,7 @@ fun ValidatorsScreen(
             PagingStateView(
                 pagingItems = pagingData,
                 emptyText = "Validator Empty",
+                contentPadding = PaddingValues(horizontal = 12.dp),
                 header = {
                     Box(modifier = Modifier.padding(vertical = 32.dp)) {
                         HomeDetailsView(

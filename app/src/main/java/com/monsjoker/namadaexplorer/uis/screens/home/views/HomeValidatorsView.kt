@@ -70,7 +70,7 @@ fun HomeValidatorsView(
                         LazyColumn(
                             modifier = Modifier
                                 .fillMaxSize(),
-                            contentPadding = PaddingValues(vertical = 16.dp),
+                            contentPadding = PaddingValues(vertical = 16.dp, horizontal = 12.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             itemsIndexed(

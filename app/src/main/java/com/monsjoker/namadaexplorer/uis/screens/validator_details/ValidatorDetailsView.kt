@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import com.monsjoker.namadaexplorer.data.network.supabase.aauxuambgprwlwvfpksz.models.Validator
 import com.monsjoker.namadaexplorer.uis.screens.validator_details.views.ValidatorDetailsHeaderStateView
 import com.monsjoker.namadaexplorer.uis.screens.validator_details.views.validatorDetailBlocks
 
@@ -101,12 +102,12 @@ fun ValidatorDetailsView(
                 modifier = Modifier
                     .padding(innerPadding)
                     .background(MaterialTheme.colorScheme.surfaceContainer),
-                contentPadding = PaddingValues(vertical = 20.dp),
+                contentPadding = PaddingValues(vertical = 16.dp, horizontal = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 item {
                     Card(
-                        shape = RoundedCornerShape(0.dp),
+                        shape = RoundedCornerShape(8.dp),
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 0.dp
                         ),
@@ -127,11 +128,13 @@ fun ValidatorDetailsView(
                                     .padding(horizontal = 12.dp)
                                     .fillMaxWidth()
                             )
-
-                            ValidatorDetailsHeaderStateView(dataState = validatorState) {
-                                viewModel.loadValidator(validatorAddress = validatorAddress)
-                            }
                         }
+                    }
+                }
+
+                item {
+                    ValidatorDetailsHeaderStateView(dataState = validatorState) {
+                        viewModel.loadValidator(validatorAddress = validatorAddress)
                     }
                 }
 

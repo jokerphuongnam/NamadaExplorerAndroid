@@ -2,11 +2,12 @@
 
 package com.monsjoker.namadaexplorer.uis.screens.parameters.views
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
@@ -32,25 +33,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monsjoker.namadaexplorer.data.domain.DataState
 import com.monsjoker.namadaexplorer.data.network.namada_info.models.GenesisAccount
+import com.monsjoker.namadaexplorer.uis.shared_view.CardInfo
 import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLine
 import com.monsjoker.namadaexplorer.uis.shared_view.ErrorView
-import com.monsjoker.namadaexplorer.uis.shared_view.Text
 import com.monsjoker.namadaexplorer.utils.format
 import com.monsjoker.namadaexplorer.utils.formattedWithCommas
 
-@Composable
-fun LazyListScope.GenesisAccountsView(
+fun LazyListScope.genesisAccountsView(
     genesisAccountsState: DataState<List<GenesisAccount>>,
     onRetry: (() -> Unit)? = null
 ) {
-    val typography = MaterialTheme.typography
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        when (genesisAccountsState) {
-            is DataState.Loading -> {
+    when (genesisAccountsState) {
+        is DataState.Loading -> {
+            item {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -59,30 +54,29 @@ fun LazyListScope.GenesisAccountsView(
                     }
                 }
             }
+        }
 
-            is DataState.Success -> {
-                val genesisAccounts = genesisAccountsState.data
+        is DataState.Success -> {
+            val genesisAccounts = genesisAccountsState.data
 
-                if (genesisAccounts.isEmpty()) {
+            if (genesisAccounts.isEmpty()) {
+                item {
                     Text(
                         text = "Validator is empty",
-                        style = typography.bodyLarge,
+                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
-                } else {
-                    Column(
-                        modifier = Modifier,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        itemsIndexed(genesisAccounts) { index, genesisAccount ->
-                            GenesisAccountView(index + 1, genesisAccount)
-                        }
-                    }
+                }
+            } else {
+                itemsIndexed(genesisAccounts) { index, genesisAccount ->
+                    GenesisAccountView(index + 1, genesisAccount)
                 }
             }
+        }
 
-            is DataState.Error -> {
-                val error = genesisAccountsState.error
+        is DataState.Error -> {
+            val error = genesisAccountsState.error
+            item {
                 ErrorView(error = error, onRetry = onRetry)
             }
         }
@@ -102,7 +96,7 @@ private fun GenesisAccountView(
     val typography = MaterialTheme.typography
 
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -167,6 +161,7 @@ private fun GenesisAccountView(
     if (isShowBottomSheet) {
         ModalBottomSheet(
             sheetState = sheetState,
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
             onDismissRequest = {
                 isShowBottomSheet = false
             }
@@ -186,52 +181,64 @@ private fun GenesisAccountDetailsBottomSheetView(
 ) {
     Column(
         modifier = Modifier
-            .padding(horizontal = 12.dp)
-            .padding(bottom = 32.dp) then modifier,
+            .background(MaterialTheme.colorScheme.secondaryContainer) then modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
             text = genesisAccount.alias,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
+            fontSize = 20.sp,
+            modifier = Modifier
+                .padding(horizontal = 12.dp)
         )
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surfaceContainer)
         ) {
-
-            val commissionRate = genesisAccount.commissionRate.toDouble()
-            val maxCommissionRateChange =
-                genesisAccount.maxCommissionRateChange.toDouble()
-            Text(
-                label = "Commission rate",
-                value = "${(commissionRate * 100).format(2)}%"
-            )
-            Text(
-                label = "Max commission rate change",
-                value = "${(maxCommissionRateChange * 100).format(2)}%"
-            )
-            Text(
-                label = "Net address",
-                value = genesisAccount.netAddress
-            )
-            Text(
-                label = "Bound",
-                value = genesisAccount.bondAmount.toDouble()
-            )
-            Text(
-                label = "Consensus key",
-                value = genesisAccount.consensusKeyPk.uppercase()
-            )
-            Text(
-                label = "Hashed key",
-                value = genesisAccount.hashedKey
-            )
-            Text(
-                label = "Address",
-                value = genesisAccount.address.uppercase()
-            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier
+                    .padding(top = 12.dp)
+                    .padding(horizontal = 12.dp)
+                    .padding(bottom = 32.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    val commissionRate = genesisAccount.commissionRate.toDouble()
+                    val maxCommissionRateChange =
+                        genesisAccount.maxCommissionRateChange.toDouble()
+                    CardInfo(
+                        title = "Commission rate\n",
+                        value = "${(commissionRate * 100).format(2)}%",
+                        modifier = Modifier.weight(1f)
+                    )
+                    CardInfo(
+                        title = "Max commission rate change",
+                        value = "${(maxCommissionRateChange * 100).format(2)}%",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    CardInfo(
+                        title = "Net address",
+                        value = genesisAccount.netAddress,
+                        modifier = Modifier.weight(1f)
+                    )
+                    CardInfo(
+                        title = "Bound",
+                        value = genesisAccount.bondAmount.toDouble(),
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                CardInfo(title = "Consensus key", value = genesisAccount.consensusKeyPk.uppercase())
+                CardInfo(title = "Hashed key", value = genesisAccount.hashedKey)
+                CardInfo(title = "Address", value = genesisAccount.address.uppercase())
+            }
         }
     }
 }

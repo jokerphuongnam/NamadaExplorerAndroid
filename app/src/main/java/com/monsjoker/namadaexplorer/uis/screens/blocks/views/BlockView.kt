@@ -53,7 +53,7 @@ fun BlockView(
     }
 
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -105,6 +105,7 @@ fun BlockView(
     if (isShowBottomSheet) {
         ModalBottomSheet(
             sheetState = sheetState,
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
             onDismissRequest = {
                 isShowBottomSheet = false
             }
@@ -122,7 +123,7 @@ fun BlockView(
 @Composable
 fun BlockShimmerView() {
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),

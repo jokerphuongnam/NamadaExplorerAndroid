@@ -3,7 +3,9 @@
 package com.monsjoker.namadaexplorer.uis.screens.transactions.views
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -36,11 +38,11 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import com.monsjoker.namadaexplorer.R
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Transfer
-import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLineFullWidth
+import com.monsjoker.namadaexplorer.uis.shared_view.CardInfo
 import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLine
+import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLineFullWidth
 import com.monsjoker.namadaexplorer.uis.shared_view.MiddleEllipsisText
 import com.monsjoker.namadaexplorer.uis.shared_view.PagingStateView
-import com.monsjoker.namadaexplorer.uis.shared_view.Text
 import com.monsjoker.namadaexplorer.utils.formattedWithCommas
 
 @Composable
@@ -48,7 +50,7 @@ fun TransfersView(pagingItems: LazyPagingItems<Transfer>, modifier: Modifier = M
     PagingStateView(
         modifier = modifier,
         pagingItems = pagingItems,
-        contentPadding = PaddingValues(vertical = 16.dp),
+        contentPadding = PaddingValues(vertical = 16.dp, horizontal = 12.dp),
         emptyText = "Transfer is empty",
         loading = {
             Column(
@@ -71,7 +73,7 @@ private fun TransferView(index: Int, transfer: Transfer) {
         mutableStateOf(false)
     }
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -84,7 +86,8 @@ private fun TransferView(index: Int, transfer: Transfer) {
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier
+                .padding(4.dp)
                 .padding(horizontal = 12.dp)
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -141,6 +144,7 @@ private fun TransferView(index: Int, transfer: Transfer) {
     if (isShowBottomSheet) {
         ModalBottomSheet(
             sheetState = sheetState,
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
             onDismissRequest = {
                 isShowBottomSheet = false
             }
@@ -156,36 +160,48 @@ private fun TransferView(index: Int, transfer: Transfer) {
 private fun TransferDetailsBottomSheetView(transfer: Transfer, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
-            .padding(horizontal = 12.dp)
-            .padding(bottom = 32.dp) then modifier,
+            .background(MaterialTheme.colorScheme.secondaryContainer) then modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
             text = transfer.txID.drop(2).uppercase(),
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
+            fontSize = 20.sp,
+            modifier = Modifier
+                .padding(horizontal = 12.dp)
         )
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surfaceContainer)
         ) {
-            Text(
-                label = "Amount",
-                value = "${transfer.amount.toDouble().formattedWithCommas()} NAAN"
-            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier
+                    .padding(top = 12.dp)
+                    .padding(horizontal = 12.dp)
+                    .padding(bottom = 32.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    CardInfo(
+                        title = "Amount",
+                        value = "${transfer.amount.toDouble().formattedWithCommas()} NAAN",
+                        modifier = Modifier.weight(1f)
+                    )
 
-            Text(label = "Shielded", value = if (transfer.shielded == null) "No" else "Yes")
+                    CardInfo(
+                        title = "Shielded",
+                        value = if (transfer.shielded == null) "No" else "Yes",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
 
-            Text(
-                label = "Source",
-                value = transfer.source.uppercase()
-            )
-
-            Text(
-                label = "Target",
-                value = transfer.target.uppercase()
-            )
+                CardInfo(title = "Source", value = transfer.source.uppercase())
+                CardInfo(title = "Target", value = transfer.target.uppercase())
+            }
         }
     }
 }
@@ -193,7 +209,7 @@ private fun TransferDetailsBottomSheetView(transfer: Transfer, modifier: Modifie
 @Composable
 private fun TransferShimmerView() {
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),

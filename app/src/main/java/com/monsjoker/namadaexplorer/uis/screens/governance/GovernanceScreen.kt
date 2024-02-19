@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.monsjoker.namadaexplorer.uis.screens.governance
 
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -56,7 +53,7 @@ private fun ProposalsStateView(
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = 16.dp, horizontal = 12.dp)
             ) {
                 Box(modifier = Modifier.padding(all = 12.dp)) {
                     Text(
@@ -96,7 +93,7 @@ private fun ProposalsView(data: List<Proposal>) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize(),
-            contentPadding = PaddingValues(vertical = 16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp, horizontal = 12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {

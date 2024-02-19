@@ -79,6 +79,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                         modifier = Modifier
                             .padding(top = 16.dp)
                             .visibility(selectedTab.value == HomeState.DETAILS)
+                            .padding(horizontal = 12.dp)
                             .fillMaxWidth()
                     ) {
                         HomeDetailsView(dataState = homeDetailsState) {

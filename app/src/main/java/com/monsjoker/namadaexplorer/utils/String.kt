@@ -1,5 +1,8 @@
 package com.monsjoker.namadaexplorer.utils
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import java.text.SimpleDateFormat
 import java.util.Base64
 import java.util.Date
@@ -40,3 +43,10 @@ val String.base64Number: Long
             0
         }
     }
+
+fun String.copyToClipboard(context: Context) {
+    val clipboardManager =
+        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val clip = ClipData.newPlainText("password", this)
+    clipboardManager.setPrimaryClip(clip)
+}

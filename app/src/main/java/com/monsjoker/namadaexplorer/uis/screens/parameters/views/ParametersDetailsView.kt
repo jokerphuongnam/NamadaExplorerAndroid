@@ -150,7 +150,7 @@ private fun Section(sectionTitle: String, content: @Composable ColumnScope.() ->
     )
 
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -214,12 +214,6 @@ private fun Section(sectionTitle: String, content: @Composable ColumnScope.() ->
 @Composable
 private fun smoothRotation(rotation: Float): MutableState<Float> {
     val storedRotation = remember { mutableStateOf(rotation) }
-
-    // Sample data
-    // current angle 340 -> new angle 10 -> diff -330 -> +30
-    // current angle 20 -> new angle 350 -> diff 330 -> -30
-    // current angle 60 -> new angle 270 -> diff 210 -> -150
-    // current angle 260 -> new angle 10 -> diff -250 -> +110
 
     LaunchedEffect(rotation) {
         snapshotFlow { rotation }
