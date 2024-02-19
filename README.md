@@ -53,6 +53,10 @@ Users can click on items from validators, blocks, transactions, proposals, and G
 
 - **Validator Detail Screen**: Displays detailed information about a validator and the latest 10 blocks from the validator.
 
+### Screenshots
+
+[Screenshots](https://github.com/jokerphuongnam/NamadaExplorerAndroid/tree/master/Screenshots)
+
 ### Data Sources
 
 Namada Explorer fetches data from various sources:
