@@ -8,7 +8,6 @@ You can install Namada Explorer by downloading the provided APK file from the re
 
 https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/80acd037-b51d-4741-ab10-9bff5d93b465
 
-
 ## Features
 
 ### Navigation
@@ -55,13 +54,25 @@ Provides information on various parameters including Genesis Parameters, Chain P
 Users can click on items from validators, blocks, transactions, proposals, and Genesis Validators to view detailed information. If the item is a block, users can click on the validator's address to go to the Validator Detail Screen.
 
 - **Validator Detail Screen**: Displays detailed information about a validator and the latest 10 blocks from the validator.
+### Data Sources
 
-### Screenshots
- - ## Main
-  - # Main navigation draw menu
+Namada Explorer fetches data from various sources:
+
+- [Supabase Instance 1](https://aauxuambgprwlwvfpksz.supabase.co)
+- [Supabase Instance 2](https://tgwsikrpibxhbmtgrhbo.supabase.co)
+- [Namada Website](https://namada.info)
+- [Namada API](https://it.api.namada.red)
+- [Namada RPC](https://namada-rpc.hadesguard.tech)
+
+## Demo
+https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/fcf2bc75-0381-41ad-ac2e-b184fd0a0ee9
+
+## Screenshots
+ - ### Main
+  - Main navigation draw menu
    ![Main-navigation-draw-menu](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/234d5b60-37d0-427d-a749-e2d577c8070f)
    
- - ## Home
+ - ### Home
   - Details
    ![Home-Detail](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/82d0912a-c103-4e07-9c4d-3019bbba1673)
   - Top 10 Validators 
@@ -69,19 +80,19 @@ Users can click on items from validators, blocks, transactions, proposals, and G
   - Top 10 Blocks
    ![Home-top-10-blocks](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/5a602585-a6b1-4651-8671-6e610be1bf80)
    
- - ## Validators
+ - ### Validators
   - Validators
    ![Validators](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/32f78dd3-eb8f-4b4b-8bd4-af841ecded65)
   - Validator details
    ![Validator-details](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/6c7ff379-e257-486d-946d-90f72889d39c)
    
- - ## Blocks
+ - ### Blocks
   - Blocks
    ![Blocks](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/d1fe1285-3437-4855-8b45-c9860cd9fac3)
   - Block details
    ![Block-details](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/59f2a36a-42e2-4d43-886a-a41498163bb4)
    
- - ## Transactions
+ - ### Transactions
   - Transfers
    ![Transaction-Transfres](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/a912379f-1094-4e2c-8a36-bc95b156748e)
   - Transfer details
@@ -92,7 +103,7 @@ Users can click on items from validators, blocks, transactions, proposals, and G
   - Bond details
    ![Transaction-bond-details](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/a39a5d57-caf9-439f-86b8-5eced45c7eb0)
    
- - ## Governance
+ - ### Governance
   - Governance stats
    ![Governace](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/cd1ebae3-20e5-4d79-81e2-4cf4d9626582)
   - Proposals
@@ -100,7 +111,7 @@ Users can click on items from validators, blocks, transactions, proposals, and G
   - Proposal details
    ![Governance-proposal-details](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/826d92f2-bb93-435f-b61d-ce0baccfdecb)
 
- - ## Parameters
+ - ### Parameters
   - Parameters expanded
    ![Parameters-expand](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/5f124a37-203f-46ed-8d5b-06486eb0f4ae)
   - Parameters collapsed
@@ -108,15 +119,6 @@ Users can click on items from validators, blocks, transactions, proposals, and G
   - Genesis validators
    ![Parameters-genesis-validators](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/659cd0e4-8a57-4540-bd76-fd43f8c74866)
 
-### Data Sources
-
-Namada Explorer fetches data from various sources:
-
-- [Supabase Instance 1](https://aauxuambgprwlwvfpksz.supabase.co)
-- [Supabase Instance 2](https://tgwsikrpibxhbmtgrhbo.supabase.co)
-- [Namada Website](https://namada.info)
-- [Namada API](https://it.api.namada.red)
-- [Namada RPC](https://namada-rpc.hadesguard.tech)
 
 ## Technical Details
 
