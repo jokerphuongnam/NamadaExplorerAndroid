@@ -54,15 +54,6 @@ Provides information on various parameters including Genesis Parameters, Chain P
 Users can click on items from validators, blocks, transactions, proposals, and Genesis Validators to view detailed information. If the item is a block, users can click on the validator's address to go to the Validator Detail Screen.
 
 - **Validator Detail Screen**: Displays detailed information about a validator and the latest 10 blocks from the validator.
-### Data Sources
-
-Namada Explorer fetches data from various sources:
-
-- [Supabase Instance 1](https://aauxuambgprwlwvfpksz.supabase.co)
-- [Supabase Instance 2](https://tgwsikrpibxhbmtgrhbo.supabase.co)
-- [Namada Website](https://namada.info)
-- [Namada API](https://it.api.namada.red)
-- [Namada RPC](https://namada-rpc.hadesguard.tech)
 
 ## Demo
 https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/fcf2bc75-0381-41ad-ac2e-b184fd0a0ee9
@@ -119,6 +110,15 @@ https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/fcf2bc75
   - Genesis validators
    ![Parameters-genesis-validators](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/659cd0e4-8a57-4540-bd76-fd43f8c74866)
 
+## Data Sources
+
+Namada Explorer fetches data from various sources:
+
+- [Supabase Instance 1](https://aauxuambgprwlwvfpksz.supabase.co)
+- [Supabase Instance 2](https://tgwsikrpibxhbmtgrhbo.supabase.co)
+- [Namada Website](https://namada.info)
+- [Namada API](https://it.api.namada.red)
+- [Namada RPC](https://namada-rpc.hadesguard.tech)
 
 ## Technical Details
 
