@@ -54,8 +54,38 @@ Users can click on items from validators, blocks, transactions, proposals, and G
 - **Validator Detail Screen**: Displays detailed information about a validator and the latest 10 blocks from the validator.
 
 ### Screenshots
+ - ## Main
+   ![Main-navigation-draw-menu](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/234d5b60-37d0-427d-a749-e2d577c8070f)
+   
+ - ## Home
+   ![Home-Detail](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/82d0912a-c103-4e07-9c4d-3019bbba1673)
+   ![Home-top-10-validators](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/72e86110-897f-40a1-b390-a981379a55a7)
+   ![Home-top-10-blocks](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/5a602585-a6b1-4651-8671-6e610be1bf80)
+   
+ - ## Validators
+   ![Validators](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/32f78dd3-eb8f-4b4b-8bd4-af841ecded65)
+   ![Validator-details](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/6c7ff379-e257-486d-946d-90f72889d39c)
+   
+ - ## Blocks
+   ![Blocks](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/d1fe1285-3437-4855-8b45-c9860cd9fac3)
+   ![Block-details](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/59f2a36a-42e2-4d43-886a-a41498163bb4)
+   
+ - ## Transactions
+   ![Transaction-Transfres](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/a912379f-1094-4e2c-8a36-bc95b156748e)
+   ![Transaction-Transfer-details](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/c30dd724-3958-4109-8491-5a109d74802a)
 
-[Screenshots](https://github.com/jokerphuongnam/NamadaExplorerAndroid/tree/master/Screenshots)
+   ![Transaction-Bonds](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/8402da31-bdd0-4078-acec-44bc89c591f8)
+   ![Transaction-bond-details](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/a39a5d57-caf9-439f-86b8-5eced45c7eb0)
+   
+ - ## Governance
+   ![Governace](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/cd1ebae3-20e5-4d79-81e2-4cf4d9626582)
+   ![Governance-Proposals](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/61f8bb90-339a-4641-bf6d-7d75a54d903c)
+   ![Governance-proposal-details](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/826d92f2-bb93-435f-b61d-ce0baccfdecb)
+
+ - ## Parameters
+   ![Parameters-expand](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/5f124a37-203f-46ed-8d5b-06486eb0f4ae)
+   ![Parameters-collapsed](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/ea8f39ea-769b-4b62-9354-11e7189aab8d)
+   ![Parameters-genesis-validators](https://github.com/jokerphuongnam/NamadaExplorerAndroid/assets/44250248/659cd0e4-8a57-4540-bd76-fd43f8c74866)
 
 ### Data Sources
 
