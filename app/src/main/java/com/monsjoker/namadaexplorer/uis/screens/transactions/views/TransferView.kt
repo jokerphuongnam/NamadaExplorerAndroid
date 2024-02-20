@@ -60,6 +60,9 @@ fun TransfersView(pagingItems: LazyPagingItems<Transfer>, modifier: Modifier = M
                     TransferShimmerView()
                 }
             }
+        },
+        loadMoreLoading = {
+            TransferShimmerView()
         }
     ) { index, transfer ->
         TransferView(index = index + 1, transfer = transfer)
@@ -78,7 +81,11 @@ private fun TransferView(index: Int, transfer: Transfer) {
             defaultElevation = 8.dp
         ),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
+            containerColor = if (isShowBottomSheet) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                MaterialTheme.colorScheme.secondaryContainer
+            }
         ),
         onClick = {
             isShowBottomSheet = true

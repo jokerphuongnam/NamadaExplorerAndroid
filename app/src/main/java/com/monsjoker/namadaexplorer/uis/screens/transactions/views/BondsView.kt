@@ -59,6 +59,9 @@ fun BondsView(pagingItems: LazyPagingItems<Bond>, modifier: Modifier = Modifier)
                     BondShimmerView()
                 }
             }
+        },
+        loadMoreLoading = {
+            BondShimmerView()
         }
     ) { index, bond ->
         BondView(index = index + 1, bond = bond)
@@ -78,7 +81,11 @@ private fun BondView(index: Int, bond: Bond) {
             defaultElevation = 8.dp
         ),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
+            containerColor = if (isShowBottomSheet) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                MaterialTheme.colorScheme.secondaryContainer
+            }
         ),
         onClick = {
             isShowBottomSheet = true

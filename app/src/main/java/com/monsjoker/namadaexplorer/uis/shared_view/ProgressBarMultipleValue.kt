@@ -9,24 +9,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 class ProgressBarValue(
-    val value: Float,
+    val value: Long,
     val color: Color
 )
 
 @Composable
 fun ProgressBarMultipleValue(values: List<ProgressBarValue>, modifier: Modifier = Modifier) {
+    val sum = values.map { it.value }.sum()
     Row(modifier = Modifier.fillMaxHeight() then modifier) {
         for (value in values) {
-            Box(
-                modifier = Modifier
-                    .weight(
-                        value.value / values
-                            .map { it.value }
-                            .sum()
-                    )
-                    .background(value.color)
-                    .fillMaxHeight()
-            )
+            val weight = value.value.toDouble() / sum.toDouble()
+            if (weight > 0) {
+                Box(
+                    modifier = Modifier
+                        .weight(weight.toFloat())
+                        .background(value.color)
+                        .fillMaxHeight()
+                )
+            }
         }
     }
 }

@@ -23,6 +23,7 @@ fun <T : Any> PagingStateView(
     emptyText: String = "empty",
     loading: @Composable (() -> Unit),
     header: @Composable (() -> Unit)? = null,
+    loadMoreLoading: @Composable () -> Unit,
     content: @Composable (index: Int, item: T) -> Unit
 ) {
     when (val dataState = pagingItems.loadState.refresh) {
@@ -46,7 +47,8 @@ fun <T : Any> PagingStateView(
                 pagingItems = pagingItems,
                 emptyText = emptyText,
                 header = header,
-                content = content
+                content = content,
+                loadMoreLoading = loadMoreLoading
             )
         }
 
@@ -74,6 +76,7 @@ private fun <T : Any> PagingListView(
     pagingItems: LazyPagingItems<T>,
     emptyText: String = "empty",
     header: @Composable (() -> Unit)? = null,
+    loadMoreLoading: @Composable () -> Unit,
     content: @Composable (index: Int, item: T) -> Unit
 ) {
     pagingItems[0]
@@ -117,7 +120,8 @@ private fun <T : Any> PagingListView(
                         loadMoreState = pagingItems.loadState.append,
                         retryAction = {
                             pagingItems.retry()
-                        }
+                        },
+                        loading = loadMoreLoading
                     )
                 }
             }

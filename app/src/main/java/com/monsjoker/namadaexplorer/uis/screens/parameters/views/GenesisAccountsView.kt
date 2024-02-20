@@ -101,7 +101,11 @@ private fun GenesisAccountView(
             defaultElevation = 8.dp
         ),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
+            containerColor = if (isShowBottomSheet) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                MaterialTheme.colorScheme.secondaryContainer
+            }
         ),
         onClick = {
             isShowBottomSheet = true
@@ -246,7 +250,7 @@ private fun GenesisAccountDetailsBottomSheetView(
 @Composable
 private fun GenesisAccountShimmerView() {
     Card(
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -262,9 +266,9 @@ private fun GenesisAccountShimmerView() {
         ) {
             Column {
                 Row {
-                    ComponentRectangleLine(width = 200.dp)
+                    ComponentRectangleLine(width = 100.dp)
                     Spacer(modifier = Modifier.weight(1f))
-                    ComponentRectangleLine(width = 250.dp)
+                    ComponentRectangleLine(width = 150.dp)
                 }
                 Column(modifier = Modifier.padding(vertical = 4.dp)) {
                     Row(

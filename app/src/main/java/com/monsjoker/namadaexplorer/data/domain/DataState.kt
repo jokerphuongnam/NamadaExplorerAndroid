@@ -31,21 +31,3 @@ sealed interface DataState<T> {
         }
     }
 }
-
-sealed class LoadMoreState {
-    data object Loading : LoadMoreState()
-    data class Error(val error: Throwable) : LoadMoreState()
-}
-
-sealed class PrepareLoadMore {
-    data object CanLoadMore : PrepareLoadMore()
-    data object CannotLoadMore : PrepareLoadMore()
-    data object Success : PrepareLoadMore()
-}
-
-data class PagingUIState(
-    val isShowLoading: Boolean = false,
-    val isShowLoadingAppendLoading: Boolean = false,
-    val isLoadedData: Boolean = false,
-    val error: Throwable? = null
-)

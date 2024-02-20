@@ -3,6 +3,7 @@ package com.monsjoker.namadaexplorer.utils
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import androidx.compose.ui.graphics.Color
 import java.text.SimpleDateFormat
 import java.util.Base64
 import java.util.Date
@@ -49,4 +50,24 @@ fun String.copyToClipboard(context: Context) {
         context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val clip = ClipData.newPlainText("password", this)
     clipboardManager.setPrimaryClip(clip)
+}
+
+fun String.insertSpacesBeforeUppercase(): String {
+    val builder = StringBuilder()
+    for (char in this) {
+        if (char.isUpperCase()) {
+            builder.append(' ')
+        }
+        builder.append(char)
+    }
+    return builder.toString().trim()
+}
+
+val String.colorByHashCode: Color
+get() {
+    val hash = hashCode()
+    val red = (hash and 0xFF0000 shr 16) / 255.0f
+    val green = (hash and 0x00FF00 shr 8) / 255.0f
+    val blue = (hash and 0x0000FF) / 255.0f
+    return Color(red, green, blue, 1.0f)
 }

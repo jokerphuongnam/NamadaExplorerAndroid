@@ -64,6 +64,7 @@ import com.monsjoker.namadaexplorer.uis.screens.main.data.MainState
 import com.monsjoker.namadaexplorer.uis.screens.parameters.ParametersScreen
 import com.monsjoker.namadaexplorer.uis.screens.transactions.TransactionsScreen
 import com.monsjoker.namadaexplorer.uis.screens.validators.ValidatorsScreen
+import com.monsjoker.namadaexplorer.uis.shared_view.SelectedButton
 import com.monsjoker.namadaexplorer.utils.visibility
 import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbarScaffold
@@ -88,7 +89,7 @@ fun MainScreen(navController: NavController) {
     }
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         ModalNavigationDrawer(
             drawerState = drawerState,
@@ -230,47 +231,6 @@ private fun NavigationDrawContent(
 }
 
 @Composable
-private fun SelectedButton(
-    isSelected: Boolean = false,
-    @DrawableRes iconId: Int? = null,
-    title: String,
-    onClick: () -> Unit = {}
-) {
-    Card(
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 8.dp
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer
-        ),
-        onClick = onClick
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp, horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (iconId != null) {
-                Image(
-                    painter = painterResource(id = iconId),
-                    contentDescription = title,
-                    modifier = Modifier.size(16.dp)
-                )
-
-                Spacer(modifier = Modifier.width(4.dp))
-            }
-            Text(
-                text = title,
-                fontWeight = if (isSelected) FontWeight.Black else FontWeight.Bold,
-                modifier = Modifier.weight(1f),
-            )
-        }
-    }
-}
-
-@Composable
 private fun MainContent(
     navController: NavController,
     mainLoadedState: HashSet<MainState>,
@@ -289,7 +249,7 @@ private fun MainContent(
             Card(
                 Modifier
                     .height(52.dp),
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(0.dp),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 8.dp
                 ),

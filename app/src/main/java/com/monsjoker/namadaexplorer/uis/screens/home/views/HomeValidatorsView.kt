@@ -49,7 +49,8 @@ fun HomeValidatorsView(
                 is DataState.Loading -> {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.padding(vertical = 16.dp)
+                        modifier = Modifier
+                            .padding(vertical = 16.dp, horizontal = 12.dp)
                     ) {
                         for (index in 0..9) {
                             ValidatorShimmerView()

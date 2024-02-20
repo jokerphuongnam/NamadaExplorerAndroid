@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.monsjoker.namadaexplorer.R
 import com.monsjoker.namadaexplorer.data.network.supabase.tgwsikrpibxhbmtgrhbo.models.Block
-import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLineFullWidth
 import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLine
+import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLineFullWidth
 import com.monsjoker.namadaexplorer.uis.shared_view.MiddleEllipsisText
 import com.monsjoker.namadaexplorer.utils.date
 import com.monsjoker.namadaexplorer.utils.formattedWithCommas
@@ -58,7 +58,11 @@ fun BlockView(
             defaultElevation = 8.dp
         ),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
+            containerColor = if (isShowBottomSheet) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                MaterialTheme.colorScheme.secondaryContainer
+            }
         ),
         onClick = {
             isShowBottomSheet = true

@@ -29,7 +29,7 @@ class GovernanceViewModel @Inject constructor(
         viewModelScope.launch {
             proposalsState = try {
                 val proposals = itNamadaRedNetwork.fetchProposals().proposals.sortedBy { proposal ->
-                    proposal.id
+                    proposal.id.toInt()
                 }
                 DataState.Success(data = proposals)
             } catch (e: Exception) {

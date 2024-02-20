@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -37,19 +35,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monsjoker.namadaexplorer.data.network.id_namada_red.models.Proposal
-import com.monsjoker.namadaexplorer.uis.shared_view.BottomSheetSelectedView
-import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLineFullWidth
+import com.monsjoker.namadaexplorer.uis.shared_view.CardInfo
+import com.monsjoker.namadaexplorer.uis.shared_view.ChartConfig
+import com.monsjoker.namadaexplorer.uis.shared_view.CircularChart
 import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLine
+import com.monsjoker.namadaexplorer.uis.shared_view.ComponentRectangleLineFullWidth
 import com.monsjoker.namadaexplorer.uis.shared_view.ProgressBarMultipleValue
 import com.monsjoker.namadaexplorer.uis.shared_view.ProgressBarValue
-import com.monsjoker.namadaexplorer.uis.shared_view.Text
 import com.monsjoker.namadaexplorer.uis.theme.DarkGreen
 import com.monsjoker.namadaexplorer.uis.theme.DarkRed
 import com.monsjoker.namadaexplorer.uis.theme.DarkYellow
 import com.monsjoker.namadaexplorer.uis.theme.LightGreen
 import com.monsjoker.namadaexplorer.uis.theme.LightRed
 import com.monsjoker.namadaexplorer.uis.theme.LightYellow
-
 
 @Composable
 fun ProposalView(index: Int, proposal: Proposal, modifier: Modifier = Modifier) {
@@ -64,11 +62,16 @@ fun ProposalView(index: Int, proposal: Proposal, modifier: Modifier = Modifier) 
             defaultElevation = 8.dp
         ),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
+            containerColor = if (isShowBottomSheet) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                MaterialTheme.colorScheme.secondaryContainer
+            }
         ),
         onClick = {
             isShowBottomSheet = true
         },
+        modifier = modifier
     ) {
         Column(
             modifier = Modifier
@@ -124,10 +127,10 @@ fun ProposalView(index: Int, proposal: Proposal, modifier: Modifier = Modifier) 
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = proposal.id.toString(),
+                            text = "${proposal.id}     ".take(5),
                             fontWeight = FontWeight.Bold,
                             maxLines = 1,
-                            modifier = Modifier.width(24.dp)
+                            modifier = Modifier
                         )
 
                         Box(
@@ -151,15 +154,15 @@ fun ProposalView(index: Int, proposal: Proposal, modifier: Modifier = Modifier) 
                                 ProgressBarMultipleValue(
                                     values = listOf(
                                         ProgressBarValue(
-                                            value = proposal.yayVotes.toFloat(),
+                                            value = proposal.yayVotes.toLong(),
                                             color = Color.Green
                                         ),
                                         ProgressBarValue(
-                                            value = proposal.nayVotes.toFloat(),
+                                            value = proposal.nayVotes.toLong(),
                                             color = Color.Red
                                         ),
                                         ProgressBarValue(
-                                            value = proposal.yayVotes.toFloat(),
+                                            value = proposal.abstainVotes.toLong(),
                                             color = Color.Gray
                                         ),
                                     )
@@ -192,52 +195,122 @@ fun ProposalView(index: Int, proposal: Proposal, modifier: Modifier = Modifier) 
 private fun ProposalDetailsBottomSheetView(proposal: Proposal, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
-            .padding(horizontal = 12.dp)
-            .padding(bottom = 32.dp) then modifier,
+            .background(MaterialTheme.colorScheme.secondaryContainer) then modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = proposal.id.toString(),
-            textAlign = TextAlign.Left,
+            text = "Proposal details",
+            textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
+            fontSize = 20.sp,
+            modifier = Modifier
+                .padding(horizontal = 12.dp)
         )
 
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surfaceContainer)
         ) {
-            item {
-                Text(label = "Author", value = proposal.author.account)
-            }
-            item {
-                Text(label = "Kind", value = proposal.kind)
-            }
-            item {
-                Text(label = "Result", value = proposal.resultEnum?.value ?: proposal.result)
-            }
-            item {
-                Text(label = "Start epoch", value = proposal.startEpoch)
-            }
-            item {
-                Text(label = "End epoch", value = proposal.endEpoch)
-            }
-            item {
-                Text(label = "Grace epoch", value = proposal.graceEpoch)
-            }
-            item {
-                Text(label = "Yes votes", value = proposal.yayVotes)
-            }
-            item {
-                Text(label = "No votes", value = proposal.nayVotes)
-            }
-            item {
-                Text(label = "Abstain votes", value = proposal.abstainVotes)
-            }
-            item {
-                BottomSheetSelectedView(
-                    title = "Content",
-                    text = proposal.content,
-                    isBoolContent = false
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier
+                    .padding(top = 12.dp)
+                    .padding(horizontal = 12.dp)
+                    .padding(bottom = 32.dp)
+            ) {
+                if (proposal.resultEnum != Proposal.Result.Pending) {
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.fillMaxWidth(),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 0.dp
+                        ),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        ),
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        ) {
+                            Text(
+                                text = "Votes",
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                CircularChart(
+                                    configs = listOf(
+                                        ChartConfig(
+                                            value = proposal.yayVotes.toLong(),
+                                            color = Color.Green,
+                                            legend = "Yes votes",
+                                            unit = "Votes"
+                                        ),
+                                        ChartConfig(
+                                            value = proposal.nayVotes.toLong(),
+                                            color = Color.Red,
+                                            legend = "Nah votes",
+                                            unit = "Votes"
+                                        ),
+                                        ChartConfig(
+                                            value = proposal.abstainVotes.toLong(),
+                                            color = Color.Gray,
+                                            legend = "Abstain votes",
+                                            unit = "Votes"
+                                        )
+                                    ),
+                                    size = 100.dp,
+                                    thickness = 16.dp,
+                                    gapBetweenCircles = 24.dp
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    CardInfo(
+                        title = "ID",
+                        value = proposal.id.toString(),
+                        modifier = Modifier.weight(1f)
+                    )
+                    CardInfo(
+                        title = "Kind",
+                        value = proposal.kind,
+                        modifier = Modifier.weight(1f)
+                    )
+                    CardInfo(
+                        title = "Result",
+                        value = proposal.resultEnum?.value ?: proposal.result,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    CardInfo(
+                        title = "Start epoch",
+                        value = proposal.startEpoch,
+                        modifier = Modifier.weight(1f)
+                    )
+                    CardInfo(
+                        title = "End epoch",
+                        value = proposal.endEpoch,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                CardInfo(
+                    title = proposal.author.account,
+                    value = proposal.content,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
@@ -257,11 +330,12 @@ fun ProposalShimmerView() {
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(vertical = 4.dp)
+            modifier = Modifier
+                .padding(vertical = 4.dp)
                 .padding(horizontal = 12.dp)
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp ),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),

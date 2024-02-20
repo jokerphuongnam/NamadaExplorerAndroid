@@ -97,7 +97,8 @@ private fun DataView(data: HomeDetailsData) {
                         color = MaterialTheme.colorScheme.primaryContainer,
                         backgroundCircleColor = Color.Transparent,
                         size = 100.dp,
-                        thickness = 16.dp
+                        thickness = 16.dp,
+                        gapBetweenCircles = 24.dp
                     )
 
                     Column(
@@ -202,7 +203,8 @@ private fun HomeDetailsShimmerLoadingData() {
 
                     ComponentRing(
                         size = 100.dp,
-                        thickness = 16.dp
+                        thickness = 16.dp,
+                        gapBetweenCircles = 24.dp
                     )
 
                     Column(

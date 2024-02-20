@@ -4,10 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.paging.LoadState
 
 @Composable
-fun LoadMoreView(loadMoreState: LoadState, retryAction: (() -> Unit)? = null) {
+fun LoadMoreView(
+    loadMoreState: LoadState,
+    retryAction: (() -> Unit)? = null,
+    loading: @Composable () -> Unit
+) {
     when (loadMoreState) {
         LoadState.Loading -> {
-            ProgressView()
+            loading()
         }
 
         is LoadState.NotLoading -> {

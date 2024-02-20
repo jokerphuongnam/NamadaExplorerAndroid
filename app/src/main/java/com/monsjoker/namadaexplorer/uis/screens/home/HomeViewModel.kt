@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor(
     var homeDetailsState by mutableStateOf<DataState<HomeDetailsData>>(DataState.Loading())
         private set
 
-    private var isBlocksLoaded = false
+    var isBlocksLoaded = false
 
     init {
         loadHomeDetails()
